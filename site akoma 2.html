@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akoma Lab | Evolving Dreams</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card-bg: #141414;
+            --terracota: #c35b3e;
+            --text-main: #fdf8f5;
+            --text-dim: #808080; /* Cinza claro para o rodapé */
+            --radius: 40px;
+            --transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Fundo com Rabiscos de Lápis */
+        body {
+            background-color: var(--bg);
+            background-image: url("data:image/svg+xml,%3Csvg width='500' height='500' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 50 Q 150 100 50 200 T 250 300' stroke='rgba(255,255,255,0.03)' fill='transparent' stroke-width='1'/%3E%3Cpath d='M400 100 Q 450 250 300 400' stroke='rgba(195,91,62,0.05)' fill='transparent' stroke-width='1'/%3E%3Cpath d='M100 450 C 150 400 250 450 300 350' stroke='rgba(255,255,255,0.02)' fill='transparent' stroke-width='1'/%3E%3C/svg%3E");
+            color: var(--text-main);
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 400; }
+
+        /* Menu */
+        .nav-glass {
+            position: fixed;
+            top: 30px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 12px 40px;
+            border-radius: 100px;
+            display: flex; gap: 30px;
+            z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-glass a {
+            text-decoration: none; color: var(--text-main);
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
+            transition: var(--transition);
+        }
+
+        .nav-glass a:hover { color: var(--terracota); }
+
+        /* Lâmpada Flutuante */
+        .lightbulb-scroll {
+            position: fixed;
+            right: 50px;
+            top: 50%;
+            font-size: 2.5rem;
+            z-index: 500;
+            filter: drop-shadow(0 0 15px var(--terracota));
+            transition: transform 0.1s linear;
+            pointer-events: none;
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 0 10%;
+            background: linear-gradient(to bottom, rgba(10,10,10,0.4), var(--bg)), 
+                        url('img/hero-bg.jpg') center/cover;
+        }
+
+        .hero h1 { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; margin-bottom: 20px; }
+        .hero h1 span { color: var(--terracota); font-style: italic; }
+
+        /* Marquee Logos */
+        .marquee {
+            padding: 50px 0; background: #000;
+            border-top: 1px solid rgba(195, 91, 62, 0.2);
+            border-bottom: 1px solid rgba(195, 91, 62, 0.2);
+            overflow: hidden;
+        }
+
+        .marquee-track {
+            display: flex; gap: 100px; align-items: center;
+            animation: scroll 30s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-track img {
+            height: 40px; opacity: 0.5; filter: grayscale(1) brightness(2);
+            transition: 0.3s;
+        }
+
+        @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* Seção Serviços 3 Colunas */
+        .section-padding { padding: 60px 10%; }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .service-block {
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: var(--radius);
+            padding: 40px;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .service-block:hover { border-color: var(--terracota); background: rgba(30, 30, 30, 0.8); }
+
+        .service-header h3 { font-size: 2.2rem; color: var(--terracota); margin-bottom: 15px; }
+        .service-desc { font-size: 1rem; opacity: 0.8; margin-bottom: 25px; min-height: 100px; }
+
+        .service-bullets { margin-bottom: 30px; padding: 0; }
+        .service-bullets li { list-style: none; display: flex; align-items: center; font-size: 0.85rem; opacity: 0.6; margin-bottom: 10px; }
+        .service-bullets li::before { content: "→"; color: var(--terracota); margin-right: 10px; }
+
+        .btn-equipe {
+            display: inline-block; padding: 15px 35px;
+            background: var(--terracota); color: white;
+            border-radius: 100px; text-decoration: none;
+            font-weight: 600; text-transform: uppercase; font-size: 0.75rem;
+            transition: 0.3s; text-align: center;
+        }
+
+        /* Assessment */
+        .assessment-section { padding: 40px 10%; }
+        .assessment-wrap {
+            background: #111;
+            border-radius: var(--radius); padding: 50px 5%;
+            text-align: center; border: 1px solid rgba(195, 91, 62, 0.1);
+        }
+
+        .clock-visual { font-size: 3rem; margin-bottom: 20px; animation: rotateClock 10s linear infinite; display: inline-block; }
+        @keyframes rotateClock { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .step { display: none; }
+        .step.active { display: block; animation: smoothFade 0.6s forwards; }
+
+        .opt-wrap { display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+        .opt-btn {
+            background: transparent; border: 1px solid var(--terracota);
+            color: var(--terracota); padding: 15px 35px;
+            border-radius: 100px; cursor: pointer; transition: 0.3s;
+        }
+        .opt-btn:hover { background: var(--terracota); color: white; }
+
+        /* Carrossel */
+        .carousel-wrapper { position: relative; width: 100%; display: flex; align-items: center; }
+        .carousel-container { display: flex; gap: 20px; overflow-x: hidden; padding: 40px 0; width: 100%; }
+        .carousel-card { flex: 0 0 320px; background: #181818; padding: 40px; border-radius: var(--radius); border-left: 2px solid var(--terracota); }
+
+        .nav-arrow {
+            background: var(--terracota); border: none; color: white;
+            width: 45px; height: 45px; border-radius: 50%;
+            cursor: pointer; position: absolute; z-index: 10;
+        }
+        .prev-arrow { left: -20px; }
+        .next-arrow { right: -20px; }
+
+        /* Drucker Section */
+        .drucker-section {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                        url('img/drucker-bg.jpg') center/cover fixed;
+            padding: 120px 15%; text-align: center; border-radius: var(--radius);
+            margin: 60px 10%;
+        }
+
+        .drucker-section blockquote { font-size: 2.2rem; font-style: italic; }
+
+        /* Rodapé */
+        footer {
+            padding: 80px 10% 40px;
+            background: #000;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+
+        .social-links { display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; }
+        .social-links a {
+            color: var(--text-dim); text-decoration: none;
+            font-size: 0.8rem; letter-spacing: 3px; font-weight: 700; transition: 0.3s;
+        }
+        .social-links a:hover { color: var(--terracota); }
+
+        .contact-email { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 20px; display: block; text-decoration: none;}
+
+        /* WhatsApp */
+        .wa-btn { position: fixed; bottom: 40px; right: 40px; z-index: 2000; transition: 0.3s; }
+        .wa-btn img { width: 65px; height: 65px; }
+
+        @media (max-width: 768px) {
+            .nav-glass { width: 90%; gap: 10px; font-size: 0.6rem; }
+            .hero h1 { font-size: 3.5rem; }
+            .lightbulb-scroll { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lightbulb-scroll" id="bulb">💡</div>
+
+    <nav class="nav-glass">
+        <a href="#inicio">Início</a>
+        <a href="#oficio">O que fazemos</a>
+        <a href="#match">O Match</a>
+        <a href="#lab">Lab</a>
+    </nav>
+
+    <a href="https://wa.me/5521999999999" class="wa-btn" target="_blank">
+        <img src="img/whatsapp-icon.png" alt="WhatsApp">
+    </a>
+
+    <section id="inicio" class="hero">
+        <div data-aos="fade-up">
+            <img src="img/logo-akoma-branco.png" alt="Akoma Lab" style="height: 60px; margin-bottom: 20px;">
+            <h1>Traduzir <span>sonhos</span><br>gera valor.</h1>
+            <p style="max-width: 600px; margin: 20px auto; opacity: 0.7; font-weight: 300;">
+                O elo criativo entre o seu propósito e o coração do seu cliente. 🕊️
+            </p>
+        </div>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-track">
+            <img src="img/logo-globo.png" alt="Rede Globo">
+            <img src="img/logo-will.png" alt="will bank">
+            <img src="img/logo-globo.png" alt="Rede Globo">
+            <img src="img/logo-will.png" alt="will bank">
+            <img src="img/logo-globo.png" alt="Rede Globo">
+            <img src="img/logo-will.png" alt="will bank">
+        </div>
+    </div>
+
+    <section id="oficio" class="section-padding">
+        <h2 style="font-size: 3.5rem; text-align: center; margin-bottom: 50px;" data-aos="fade-up">Arquitetura Criativa 🌿</h2>
+        
+        <div class="service-grid">
+            <div class="service-block" data-aos="fade-up">
+                <div class="service-header">
+                    <h3>Social e Traffic 📣</h3>
+                    <p class="service-desc">Escalamos sua mensagem através de uma narrativa poderosa aliada à precisão dos dados, garantindo que sua marca seja vista por quem realmente importa.</p>
+                </div>
+                <ul class="service-bullets">
+                    <li>Gestão Criativa de Redes Sociais</li>
+                    <li>Tráfego Pago de Alta Performance</li>
+                    <li>Planejamento Editorial Estratégico</li>
+                    <li>Criação de Criativos de Conversão</li>
+                    <li>Setup de BI e Monitoramento</li>
+                    <li>Testes A e B de Narrativas</li>
+                    <li>Gestão de Comunidade</li>
+                    <li>Relatórios de Inteligência de Dados</li>
+                </ul>
+                <a href="https://wa.me/5521999999999" class="btn-equipe">Fale com nossa equipe</a>
+            </div>
+
+            <div class="service-block" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-header">
+                    <h3>Strategic CRM 🤝</h3>
+                    <p class="service-desc">Transformamos sua base de contatos em uma comunidade fiel. Através de automações inteligentes, cuidamos de cada etapa da jornada do cliente.</p>
+                </div>
+                <ul class="service-bullets">
+                    <li>Implantação de Ecossistema CRM</li>
+                    <li>Réguas de Boas-vindas e Onboarding</li>
+                    <li>Segmentação Avançada de Base</li>
+                    <li>Automações de Recuperação</li>
+                    <li>Fluxos de Reengajamento Ativo</li>
+                    <li>Pesquisas de Satisfação NPS</li>
+                    <li>Limpeza e Enriquecimento de Dados</li>
+                    <li>Gestão de Retenção e Churn</li>
+                </ul>
+                <a href="https://wa.me/5521999999999" class="btn-equipe">Fale com nossa equipe</a>
+            </div>
+
+            <div class="service-block" data-aos="fade-up" data-aos-delay="400">
+                <div class="service-header">
+                    <h3>Lab Training 🎓</h3>
+                    <p class="service-desc">Capacitamos seu time para internalizar a cultura de growth e criatividade da Akoma, garantindo perenidade e inovação contínua.</p>
+                </div>
+                <ul class="service-bullets">
+                    <li>Workshops Práticos de Growth</li>
+                    <li>Mentoria de Estratégia Digital</li>
+                    <li>Treinamento de IA Aplicada</li>
+                    <li>Imersão em Storytelling de Marca</li>
+                    <li>Estruturação de Processos Internos</li>
+                    <li>Consultoria de Tech Stack</li>
+                    <li>Workshop de Criatividade Operacional</li>
+                    <li>Guia de Experiência do Cliente</li>
+                </ul>
+                <a href="https://wa.me/5521999999999" class="btn-equipe">Fale com nossa equipe</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="match" class="assessment-section">
+        <div class="assessment-wrap" data-aos="zoom-in">
+            <div class="clock-visual">⏳</div>
+            <div id="quiz">
+                <div class="step active" id="s1">
+                    <h2>Seu negócio busca conexões mais profundas? ✨</h2>
+                    <div class="opt-wrap">
+                        <button class="opt-btn" onclick="next(2)">Sim, com certeza</button>
+                        <button class="opt-btn" onclick="next(2)">É o que nos falta</button>
+                    </div>
+                </div>
+                <div class="step" id="s2">
+                    <h2>Você valoriza a criatividade aliada ao respeito? 🕊️</h2>
+                    <div class="opt-wrap"><button class="opt-btn" onclick="next(3)">Sempre</button><button class="opt-btn" onclick="next(3)">Quero implementar</button></div>
+                </div>
+                <div class="step" id="s3">
+                    <h2>Pronto para traduzir seu sonho em resultados? 📈</h2>
+                    <div class="opt-wrap"><button class="opt-btn" onclick="next(4)">Estou pronto</button><button class="opt-btn" onclick="next(4)">Vamos começar!</button></div>
+                </div>
+                <div class="step" id="s4">
+                    <h2 style="color: var(--terracota);">O Match é Real! 🥂</h2>
+                    <form onsubmit="event.preventDefault(); alert('Conexão iniciada!');" style="max-width: 400px; margin: 30px auto;">
+                        <input type="text" placeholder="Seu Nome" required style="width:100%; padding:15px; border-radius:15px; border:none; margin-bottom:10px; background:#222; color:white;">
+                        <input type="tel" placeholder="WhatsApp" required style="width:100%; padding:15px; border-radius:15px; border:none; margin-bottom:20px; background:#222; color:white;">
+                        <button type="submit" class="btn-equipe" style="width:100%; border:none; cursor:pointer;">Agendar Match</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="drucker-section" data-aos="fade-up">
+        <blockquote>"O objetivo do marketing é conhecer o cliente tão bem que o produto se vende sozinho."</blockquote>
+        <p style="margin-top: 30px; font-weight: 500; color: var(--terracota);">— PETER DRUCKER</p>
+    </div>
+
+    <section id="lab" class="section-padding">
+        <h2 style="margin-bottom: 50px; text-align: center;">Curiosidades do Lab 💡</h2>
+        <div class="carousel-wrapper">
+            <button class="nav-arrow prev-arrow" onclick="scrollCarousel(-1)">❮</button>
+            <div class="carousel-container" id="carousel">
+                <div class="carousel-card"><p>Empresas com CRM estratégico aumentam a fidelização em 33%.</p><span class="source">Harvard B. Review</span></div>
+                <div class="carousel-card"><p>Reter um cliente atual é até 7x mais barato do que conquistar um novo.</p><span class="source">Bain e Company</span></div>
+                <div class="carousel-card"><p>Anúncios com narrativa emocional geram 2x mais vendas que técnicos.</p><span class="source">Nielsen</span></div>
+                <div class="carousel-card"><p>E-mails segmentados têm taxas de clique 100% maiores que genéricos.</p><span class="source">Mailchimp</span></div>
+                <div class="carousel-card"><p>Marcas com propósito crescem 2x mais rápido que as concorrentes.</p><span class="source">Kantar</span></div>
+                <div class="carousel-card"><p>A primeira impressão online de uma marca é formada em 0.05 segundos.</p><span class="source">Google Data</span></div>
+                <div class="carousel-card"><p>80% dos lucros futuros virão de apenas 20% dos seus clientes atuais.</p><span class="source">Gartner</span></div>
+                <div class="carousel-card"><p>Landing pages com vídeos podem aumentar a conversão em 80%.</p><span class="source">Unbounce</span></div>
+                <div class="carousel-card"><p>UX bem feito pode aumentar taxas de conversão em 400%.</p><span class="source">Forrester</span></div>
+                <div class="carousel-card"><p>Marcas que humanizam o digital têm LTV 40% maior.</p><span class="source">Akoma Lab</span></div>
+            </div>
+            <button class="nav-arrow next-arrow" onclick="scrollCarousel(1)">❯</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="#">INSTAGRAM</a>
+            <a href="#">LINKEDIN</a>
+        </div>
+        <a href="mailto:contato@souakoma.com.br" class="contact-email">contato@souakoma.com.br</a>
+        <p style="opacity: 0.3; font-size: 0.7rem; margin-top: 20px;">© 2026 Akoma Lab e Marketing - Onde a estratégia encontra a alma</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1200, once: true });
+
+        window.addEventListener('scroll', () => {
+            const bulb = document.getElementById('bulb');
+            const scrollPos = window.scrollY;
+            bulb.style.transform = `translateY(${scrollPos * 0.1}px) rotate(${scrollPos * 0.05}deg)`;
+        });
+
+        function next(n) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('s' + n).classList.add('active');
+        }
+
+        function scrollCarousel(direction) {
+            const container = document.getElementById('carousel');
+            container.scrollBy({ left: direction * 340, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
