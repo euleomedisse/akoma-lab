@@ -12,7 +12,7 @@
             --card-bg: #141414;
             --terracota: #c35b3e;
             --text-main: #fdf8f5;
-            --text-dim: #808080; /* Cinza claro para o rodapé */
+            --text-dim: #808080;
             --radius: 40px;
             --transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
         }
@@ -75,10 +75,10 @@
         .hero h1 { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; margin-bottom: 20px; }
         .hero h1 span { color: var(--terracota); font-style: italic; }
 
-        /* Marquee com Fundo Branco */
+        /* Barra de Marcas Refinada */
         .brands-section {
             background: #ffffff; /* Fundo branco solicitado */
-            padding: 50px 0;
+            padding: 25px 0; /* Espaçamento vertical sutil e elegante solicitado */
             border-top: 1px solid #eeeeee;
             border-bottom: 1px solid #eeeeee;
             overflow: hidden;
@@ -90,9 +90,12 @@
             color: #888888; /* Letras pequenas cinza */
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             font-weight: 500;
         }
+
+        /* Classe para quebra de texto apenas no mobile */
+        .brands-break-mobile { display: none; }
 
         .marquee-track {
             display: flex; gap: 80px; align-items: center;
@@ -148,13 +151,27 @@
             transition: 0.3s; text-align: center;
         }
 
-        /* Assessment */
+        /* Assessment Humanizado (Fundo Branco) */
         .assessment-section { padding: 40px 10%; }
         .assessment-wrap {
-            background: #111;
+            background: #ffffff; /* Fundo branco solicitado */
+            color: #1a1a1a; /* Texto escuro solicitado */
             border-radius: var(--radius); padding: 50px 5%;
             text-align: center; border: 1px solid rgba(195, 91, 62, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Sombra sutil para destacar */
         }
+
+        /* Ajuste de cores internas do assessment */
+        .assessment-wrap h2 { color: #1a1a1a; }
+        .assessment-wrap p { color: rgba(26, 26, 26, 0.8); font-weight: 300;}
+        
+        .capture-form label { color: #1a1a1a; }
+        .capture-form input {
+            color: #1a1a1a;
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid #eeeeee;
+        }
+        .capture-form input::placeholder { color: rgba(26, 26, 26, 0.5); }
 
         .clock-visual { font-size: 3rem; margin-bottom: 20px; animation: rotateClock 10s linear infinite; display: inline-block; }
         @keyframes rotateClock { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -246,7 +263,9 @@
                 line-height: 1.5;
             }
             
-            .brands-section { padding: 40px 0; }
+            /* Ajuste de Texto de Marcas Mobile solicitados */
+            .brands-break-mobile { display: block; } /* Ativa quebra de texto mobile */
+            .brands-section { padding: 25px 0; }
             .marquee-track { gap: 40px; }
             .marquee-track img { height: 28px; }
         }
@@ -278,7 +297,7 @@
     </section>
 
     <div class="brands-section">
-        <div class="brands-intro">Nossos profissionais já passaram por essas empresas.</div>
+        <div class="brands-intro">Nossos profissionais já passaram<br class="brands-break-mobile"> por essas empresas.</div>
         <div class="marquee-track">
             <img src="img/logo-sebrae.png" alt="Sebrae">
             <img src="img/logo-boticario.png" alt="O Boticário">
@@ -375,10 +394,11 @@
                     <div class="opt-wrap"><button class="opt-btn" onclick="next(4)">Estou pronto</button><button class="opt-btn" onclick="next(4)">Vamos começar!</button></div>
                 </div>
                 <div class="step" id="s4">
-                    <h2 style="color: var(--terracota);">O Match é Real! 🥂</h2>
-                    <form onsubmit="event.preventDefault(); alert('Conexão iniciada!');" style="max-width: 400px; margin: 30px auto;">
-                        <input type="text" placeholder="Seu Nome" required style="width:100%; padding:15px; border-radius:15px; border:none; margin-bottom:10px; background:#222; color:white;">
-                        <input type="tel" placeholder="WhatsApp" required style="width:100%; padding:15px; border-radius:15px; border:none; margin-bottom:20px; background:#222; color:white;">
+                    <h2>O Match é Real! 🥂</h2>
+                    <p style="margin: 20px 0;">Você tem o DNA da Akoma Lab. Vamos conversar sobre como elevar seu projeto?</p>
+                    <form onsubmit="event.preventDefault(); alert('Conexão iniciada!');" class="capture-form" style="max-width: 400px; margin: 30px auto;">
+                        <input type="text" placeholder="Seu Nome" required style="width:100%; padding:15px; border-radius:15px; border:none; margin-bottom:10px;">
+                        <input type="tel" placeholder="WhatsApp" required style="width:100%; padding:15px; border-radius:15px; border:none; margin-bottom:20px;">
                         <button type="submit" class="btn-equipe" style="width:100%; border:none; cursor:pointer;">Agendar Match</button>
                     </form>
                 </div>
