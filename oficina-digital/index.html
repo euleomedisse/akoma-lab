@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OFICINA DIGITAL PREMIUM | ESTRATÉGIA E IA | SALVADOR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --sand: #f4f1ea; 
+            --terracotta: #8e735b; 
+            --clay: #4a3728;
+            --dark: #1a1a1a;
+        }
+        
+        body { 
+            background-color: var(--sand); 
+            color: var(--dark); 
+            font-family: 'Inter', sans-serif; 
+            margin: 0;
+            overflow-x: hidden;
+            font-style: normal !important;
+        }
+
+        * { font-style: normal !important; }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+
+        .fixed-ticker {
+            position: fixed; top: 0; width: 100%;
+            background: var(--dark); color: var(--sand);
+            z-index: 1000; overflow: hidden; display: flex;
+            padding: 12px 0; font-size: 0.7rem; letter-spacing: 4px;
+            text-transform: uppercase; font-weight: 600;
+        }
+        .ticker-content { display: flex; white-space: nowrap; animation: ticker-move 40s linear infinite; }
+        @keyframes ticker-move { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .parallax-hero {
+            height: 85vh;
+            background-image: url('https://i.pinimg.com/1200x/9b/2f/17/9b2f1730f673ffd592e036bd7ec31692.jpg');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); }
+
+        .falling-agenda {
+            position: fixed; right: 30px; top: 15%; width: 100px;
+            z-index: 500; display: flex; flex-direction: column; gap: 45px;
+            pointer-events: none; opacity: 0.5;
+        }
+        .agenda-item {
+            font-size: 9px; text-transform: uppercase; font-weight: 900;
+            letter-spacing: 2px; writing-mode: vertical-rl; color: var(--terracotta);
+            transition: transform 0.1s ease-out;
+        }
+
+        .arch { border-radius: 500px 500px 0 0; overflow: hidden; }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.17, 0.67, 0.83, 0.67) all; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .lote-blocked { filter: grayscale(1) blur(1px); opacity: 0.3; pointer-events: none; }
+        
+        .whatsapp-float {
+            position: fixed; bottom: 25px; left: 25px; background: #25d366;
+            width: 55px; height: 55px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; z-index: 2000;
+        }
+
+        .btn-luxury {
+            border: 1px solid var(--dark); padding: 15px 40px;
+            text-transform: uppercase; font-size: 10px; letter-spacing: 3px;
+            font-weight: 700; transition: all 0.4s;
+        }
+        .btn-luxury:hover { background: var(--dark); color: var(--sand); }
+    </style>
+</head>
+<body>
+
+    <div class="fixed-ticker">
+        <div class="ticker-content">
+            ESTRATÉGIA ⚡ REDES SOCIAIS ⚡ CLIENTES ⚡ ENCANTAMENTO ⚡ CRM ⚡ IA ⚡ E COMMERCE ⚡ DROPSHIPPING ⚡ 
+            ESTRATÉGIA ⚡ REDES SOCIAIS ⚡ CLIENTES ⚡ ENCANTAMENTO ⚡ CRM ⚡ IA ⚡ E COMMERCE ⚡ DROPSHIPPING ⚡ 
+        </div>
+    </div>
+
+    <div class="falling-agenda" id="agenda">
+        <div class="agenda-item">09:00 START</div>
+        <div class="agenda-item">11:00 PROTOCOLO IA</div>
+        <div class="agenda-item">14:00 CANVAS</div>
+        <div class="agenda-item">16:00 ESCALA</div>
+    </div>
+
+    <a href="#" class="whatsapp-float"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="25"></a>
+
+    <header class="parallax-hero">
+        <div class="hero-overlay"></div>
+        <div class="relative z-10 text-white text-center px-6">
+            <span class="uppercase tracking-[0.5em] text-[9px] font-bold mb-6 block reveal active">Hub Salvador • 30 de Maio</span>
+            <h1 class="serif text-5xl md:text-8xl mb-8 reveal active">Oficina Digital</h1>
+            <p class="max-w-xl mx-auto text-base font-light opacity-90 mb-10 reveal active">Transforme a gestão do seu pequeno negócio com tecnologia e estratégia de elite no Hub Salvador.</p>
+            <a href="#lotes" class="btn-luxury border-white text-white hover:bg-white hover:text-black reveal active">Garantir Ingresso</a>
+        </div>
+    </header>
+
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-20 items-center mb-16">
+            <div class="reveal">
+                <span class="text-terracotta font-bold uppercase tracking-[0.2em] text-[10px] mb-4 block">A Experiência</span>
+                <h2 class="serif text-5xl mb-10 leading-tight">Estratégia para quem decide o amanhã.</h2>
+                <div class="text-gray-600 leading-relaxed space-y-6 text-sm">
+                    <p>A Oficina Digital Premium foi desenhada para o dono de negócio que cansou de ser o operário de todas as pontas. No Hub Salvador vamos unificar sua visão comercial com ferramentas que trabalham por você.</p>
+                    <p>Entendemos que o tempo é o seu ativo mais precioso. Por isso nosso foco não é apenas ensinar ferramentas mas sim construir uma clareza tática sobre como o seu dinheiro flui no digital. Vamos configurar sua Inteligência Artificial para gerar demanda constante e organizar seu CRM para que nenhuma oportunidade escape.</p>
+                    <p>Você vai aprender a delegar para a tecnologia e focar no que realmente importa: a expansão. Saia da estagnação operacional e assuma o controle estratégico da sua escala digital com quem já vive essa realidade nos maiores players do país.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="arch h-72 reveal">
+                    <img src="https://i.pinimg.com/736x/ac/e7/af/ace7af197d1f1aee87ca3a483be2ab2f.jpg" class="w-full h-full object-cover">
+                </div>
+                <div class="arch h-72 mt-12 reveal">
+                    <img src="https://i.pinimg.com/736x/11/0e/c5/110ec5f4f2e2fb0feff7b4c678ebe475.jpg" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white px-6 border-y border-gray-100">
+        <div class="max-w-5xl mx-auto reveal">
+            <div class="bg-[#fcfaf7] p-12 border border-terracotta/20 rounded-xl">
+                <h2 class="serif text-4xl mb-8 text-center text-black">Bônus Exclusivo: Sorteio ChatGPT Plus 🤖</h2>
+                <p class="text-center text-sm text-gray-600 mb-10">Vamos sortear 3 licenças completas do ChatGPT Plus entre os participantes. Cada licença custa R$ 99,00 e oferece recursos que mudam o patamar da sua produtividade:</p>
+                <div class="grid md:grid-cols-2 gap-8 text-xs leading-relaxed text-gray-500">
+                    <ul class="space-y-4">
+                        <li>✨ Acesso antecipado ao modelo principal GPT 5.3</li>
+                        <li>✨ Modelos avançados de raciocínio e modo agente</li>
+                        <li>✨ Criação de imagens ampliada e mais rápida</li>
+                        <li>✨ Pesquisa aprofundada expandida e memória maior</li>
+                    </ul>
+                    <ul class="space-y-4">
+                        <li>✨ Projetos e GPTs personalizados para o seu nicho</li>
+                        <li>✨ Agente Codex e geração de vídeos no Sora</li>
+                        <li>✨ Mais mensagens e uploads de arquivos pesados</li>
+                        <li>✨ Acesso antecipado a todos os novos recursos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-[#fcfaf7] px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="serif text-4xl mb-16">Mentores da Jornada</h2>
+            <div class="grid md:grid-cols-3 gap-16">
+                <div class="reveal">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" class="w-40 h-40 rounded-full mx-auto mb-6 object-cover shadow-xl">
+                    <h4 class="font-bold uppercase text-sm mb-1">Leo Santos</h4>
+                    <p class="text-[10px] text-terracotta font-black mb-4 uppercase">will bank • Globo • Akoma Lab</p>
+                    <p class="text-xs text-gray-400">Product Marketing e Growth focado em escala.</p>
+                </div>
+                <div class="reveal">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80" class="w-40 h-40 rounded-full mx-auto mb-6 object-cover shadow-xl">
+                    <h4 class="font-bold uppercase text-sm mb-1">Lorraine Sampaio</h4>
+                    <p class="text-[10px] text-terracotta font-black mb-4 uppercase">Agência LeBurnout</p>
+                    <p class="text-xs text-gray-400">Especialista em Comunicação e Novos Negócios.</p>
+                </div>
+                <div class="reveal">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" class="w-40 h-40 rounded-full mx-auto mb-6 object-cover shadow-xl">
+                    <h4 class="font-bold uppercase text-sm mb-1">Nyere Carvalho</h4>
+                    <p class="text-[10px] text-terracotta font-black mb-4 uppercase">Gerente Íon Itaú</p>
+                    <p class="text-xs text-gray-400">Gestão de Relacionamento e Comunicação Corporativa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-[#2d241e] text-[#f4f1ea] px-6">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="serif text-center text-4xl mb-16 reveal">Dinâmicas e Criatividade</h2>
+            <div class="grid md:grid-cols-2 gap-8 reveal">
+                <div class="border border-white/5 p-8 rounded-lg bg-white/5">
+                    <span class="text-terracotta font-black text-lg block mb-4">09:00 START</span>
+                    <h4 class="font-bold mb-4 uppercase text-xs">Visibilidade e Redes Sociais</h4>
+                    <p class="text-xs opacity-70 leading-relaxed">Posicionamento de marca e apps essenciais para criação de conteúdo. Entenda as métricas que realmente trazem dinheiro e como fazer parcerias estratégicas.</p>
+                </div>
+                <div class="border border-white/5 p-8 rounded-lg bg-white/5">
+                    <span class="text-terracotta font-black text-lg block mb-4">11:00 PROTOCOLO IA</span>
+                    <h4 class="font-bold mb-4 uppercase text-xs">Automação e Vendas</h4>
+                    <p class="text-xs opacity-70 leading-relaxed">Configuração prática de IA para vender no automático. Como usar canais de comunicação integrados para não perder nenhum lead durante o dia.</p>
+                </div>
+                <div class="border border-white/5 p-8 rounded-lg bg-white/5">
+                    <span class="text-terracotta font-black text-lg block mb-4">14:00 CANVAS</span>
+                    <h4 class="font-bold mb-4 uppercase text-xs">Estratégia e Tráfego Pago</h4>
+                    <p class="text-xs opacity-70 leading-relaxed">Laboratório prático de Canvas e primeiros passos no tráfego pago. Estruturação do seu CRM para manter o cliente comprando sempre.</p>
+                </div>
+                <div class="border border-white/5 p-8 rounded-lg bg-white/5">
+                    <span class="text-terracotta font-black text-lg block mb-4">16:00 ESCALA</span>
+                    <h4 class="font-bold mb-4 uppercase text-xs">E Commerce e Dropshipping</h4>
+                    <p class="text-xs opacity-70 leading-relaxed">Finalização da estratégia de escala final. Como rodar sua operação de vendas online de forma profissional e escalável.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="lotes" class="py-20 px-6 text-center">
+        <div class="max-w-3xl mx-auto mb-12 reveal">
+            <h2 class="serif text-4xl mb-6">Investimento e Adesão</h2>
+            <p class="text-sm text-gray-600 leading-relaxed">
+                Garantir sua vaga agora é o primeiro passo para profissionalizar seu lucro. Oferecemos pagamento facilitado em até <strong class="text-black">10 vezes no cartão</strong>. O lote inicial foi pensado para beneficiar quem decide rápido e valoriza a estratégia. Não deixe para depois e garanta seu lugar no ecossistema de elite do Hub Salvador.
+            </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16 px-6">
+            <div class="bg-white p-12 border-2 border-terracotta shadow-2xl reveal relative">
+                <span class="bg-terracotta text-white px-4 py-1 text-[8px] font-bold absolute -top-3 left-1/2 -translate-x-1/2 tracking-widest uppercase">Ativo</span>
+                <h4 class="font-bold mb-6 uppercase text-xs">Lote Inicial</h4>
+                <p class="text-5xl font-bold mb-8 serif">R$ 197</p>
+                <button class="w-full btn-luxury">Garantir Vaga</button>
+            </div>
+            <div class="bg-white p-12 border border-gray-100 lote-blocked"><h4 class="text-xs uppercase mb-4">Estratégico</h4><p class="text-5xl serif">R$ 347</p></div>
+            <div class="bg-white p-12 border border-gray-100 lote-blocked"><h4 class="text-xs uppercase mb-4">Elite</h4><p class="text-5xl serif">R$ 497</p></div>
+        </div>
+    </section>
+
+    <section class="py-16 px-6 bg-white border-t border-gray-100">
+        <div class="max-w-5xl mx-auto text-center reveal">
+            <h2 class="serif text-4xl mb-10">Localização</h2>
+            <div class="w-full mb-10">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m18!1m12!1m18!1m12!1m3!1d3887.893041300958!2d-38.51468162410313!3d-12.978696887337346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x71604e3848f074d%3A0xe54341595166f272!2sHub%20Salvador!5e0!3m2!1spt-BR!2sbr!4v1711985000000!5m2!1spt-BR!2sbr" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <p class="text-xs text-gray-500 leading-loose">
+                Avenida da França, 393 2º andar Hub • Comércio, Salvador • BA, 40010 000
+            </p>
+        </div>
+    </section>
+
+    <div class="h-[40vh] overflow-hidden"><img src="https://i.pinimg.com/1200x/07/2c/21/072c21ff7e01114b767e493feb0014e4.jpg" class="w-full h-full object-cover"></div>
+
+    <footer class="py-12 text-center opacity-30 text-[9px] font-bold uppercase tracking-[0.5em]">Oficina Digital Premium • Hub Salvador • 2026</footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const scroll = window.scrollY;
+            document.querySelectorAll('.agenda-item').forEach((item, index) => {
+                item.style.transform = `translateY(${scroll * ((index + 1) * 0.12)}px)`;
+            });
+        });
+        const obs = new IntersectionObserver((es) => {
+            es.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    </script>
+</body>
+</html>
