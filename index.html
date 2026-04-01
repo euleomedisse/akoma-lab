@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akoma Lab | Marketing</title>
+    <title>Akoma Lab | Evolving Dreams</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
@@ -75,24 +75,38 @@
         .hero h1 { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; margin-bottom: 20px; }
         .hero h1 span { color: var(--terracota); font-style: italic; }
 
-        /* Marquee Logos */
-        .marquee {
-            padding: 50px 0; background: #000;
-            border-top: 1px solid rgba(195, 91, 62, 0.2);
-            border-bottom: 1px solid rgba(195, 91, 62, 0.2);
+        /* Marquee com Fundo Branco */
+        .brands-section {
+            background: #ffffff; /* Fundo branco solicitado */
+            padding: 50px 0;
+            border-top: 1px solid #eeeeee;
+            border-bottom: 1px solid #eeeeee;
             overflow: hidden;
+            text-align: center;
+        }
+
+        .brands-intro {
+            font-size: 0.7rem;
+            color: #888888; /* Letras pequenas cinza */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            font-weight: 500;
         }
 
         .marquee-track {
-            display: flex; gap: 100px; align-items: center;
-            animation: scroll 30s linear infinite;
+            display: flex; gap: 80px; align-items: center;
+            animation: scroll 35s linear infinite;
             width: max-content;
         }
 
         .marquee-track img {
-            height: 40px; opacity: 0.5; filter: grayscale(1) brightness(2);
+            height: 35px; /* Altura sutil */
+            opacity: 0.7;
             transition: 0.3s;
         }
+
+        .marquee-track img:hover { opacity: 1; transform: scale(1.05); }
 
         @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
@@ -200,10 +214,41 @@
         .wa-btn { position: fixed; bottom: 40px; right: 40px; z-index: 2000; transition: 0.3s; }
         .wa-btn img { width: 65px; height: 65px; }
 
+        /* --- MELHORIAS MOBILE --- */
         @media (max-width: 768px) {
-            .nav-glass { width: 90%; gap: 10px; font-size: 0.6rem; }
-            .hero h1 { font-size: 3.5rem; }
-            .lightbulb-scroll { display: none; }
+            /* Menu Mobile Centralizado e Mais Transparente */
+            .nav-glass { 
+                width: 90%; 
+                gap: 10px; 
+                font-size: 0.65rem; 
+                top: 20px;
+                left: 50%; 
+                transform: translateX(-50%); /* Centralização garantida */
+                background: rgba(20, 20, 20, 0.6); /* Mais transparente solicitado */
+                backdrop-filter: blur(10px); /* Menos blur para maior transparência */
+                justify-content: center;
+                padding: 12px 20px;
+            }
+            .nav-glass a { letter-spacing: 1px; }
+
+            .hero h1 { font-size: 3rem; }
+            .hero { padding: 0 5%; }
+            .lightbulb-scroll { display: none; } /* Esconde lâmpada no mobile */
+
+            /* Ajuste da Frase de Peter Drucker no Mobile */
+            .drucker-section { 
+                padding: 80px 5%; 
+                margin: 40px 5%; 
+                background-attachment: scroll; /* Melhora performance mobile */
+            }
+            .drucker-section blockquote { 
+                font-size: 1.4rem; /* Tamanho mais legível e ajustado */
+                line-height: 1.5;
+            }
+            
+            .brands-section { padding: 40px 0; }
+            .marquee-track { gap: 40px; }
+            .marquee-track img { height: 28px; }
         }
     </style>
 </head>
@@ -224,7 +269,7 @@
 
     <section id="inicio" class="hero">
         <div data-aos="fade-up">
-            <img src="img/logo-akoma-branco.png" alt="Akoma Lab" style="height: 60px; margin-bottom: 20px;">
+            <img src="img/logo akoma.png" alt="Akoma Lab" style="height: 60px; margin-bottom: 20px;">
             <h1>Traduzir <span>sonhos</span><br>gera valor.</h1>
             <p style="max-width: 600px; margin: 20px auto; opacity: 0.7; font-weight: 300;">
                 O elo criativo entre o seu propósito e o coração do seu cliente. 🕊️
@@ -232,14 +277,21 @@
         </div>
     </section>
 
-    <div class="marquee">
+    <div class="brands-section">
+        <div class="brands-intro">Nossos profissionais já passaram por essas empresas.</div>
         <div class="marquee-track">
-            <img src="img/logo-globo.png" alt="Rede Globo">
-            <img src="img/logo-will.png" alt="will bank">
-            <img src="img/logo-globo.png" alt="Rede Globo">
-            <img src="img/logo-will.png" alt="will bank">
-            <img src="img/logo-globo.png" alt="Rede Globo">
-            <img src="img/logo-will.png" alt="will bank">
+            <img src="img/logo-sebrae.png" alt="Sebrae">
+            <img src="img/logo-boticario.png" alt="O Boticário">
+            <img src="img/logo-willbank-cliente.webp" alt="will bank">
+            <img src="img/logo-k21-cliente.png" alt="K21 Global">
+            <img src="img/logo-grupolis-cliente.jpg" alt="Grupolis">
+            <img src="img/logo-comprev.jpg" alt="Comprev">
+            <img src="img/logo-sebrae.png" alt="Sebrae">
+            <img src="img/logo-boticario.png" alt="O Boticário">
+            <img src="img/logo-willbank-cliente.webp" alt="will bank">
+            <img src="img/logo-k21-cliente.png" alt="K21 Global">
+            <img src="img/logo-grupolis-cliente.jpg" alt="Grupolis">
+            <img src="img/logo-comprev.jpg" alt="Comprev">
         </div>
     </div>
 
@@ -375,7 +427,9 @@
         window.addEventListener('scroll', () => {
             const bulb = document.getElementById('bulb');
             const scrollPos = window.scrollY;
-            bulb.style.transform = `translateY(${scrollPos * 0.1}px) rotate(${scrollPos * 0.05}deg)`;
+            if (bulb) {
+                bulb.style.transform = `translateY(${scrollPos * 0.1}px) rotate(${scrollPos * 0.05}deg)`;
+            }
         });
 
         function next(n) {
