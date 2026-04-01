@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OFICINA DIGITAL PREMIUM | ESTRATÉGIA E IA | SALVADOR</title>
+    <title>Participe da Oficinal Digital | Salvador 30.05</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <style>
         :root { 
             --sand: #f4f1ea; 
@@ -23,11 +23,10 @@
             font-style: normal !important;
         }
 
-        /* Bloqueio total de itálicos via CSS */
+        /* Bloqueio de itálicos e hifens */
         * { font-style: normal !important; }
         .serif { font-family: 'Cormorant Garamond', serif; }
 
-        /* Ticker Fixo Superior */
         .fixed-ticker {
             position: fixed; top: 0; width: 100%;
             background: var(--dark); color: var(--sand);
@@ -51,7 +50,7 @@
         }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.35); }
 
-        /* Agenda Lateral Caindo */
+        /* Agenda Lateral */
         .falling-agenda {
             position: fixed; right: 30px; top: 15%; width: 100px;
             z-index: 500; display: flex; flex-direction: column; gap: 50px;
@@ -63,17 +62,22 @@
             transition: transform 0.1s ease-out;
         }
 
-        /* Formas de Arcos (Layout Dinâmico) */
         .arch { border-radius: 500px 500px 0 0; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-
-        /* Animações de Revelação ao Scroll */
         .reveal { opacity: 0; transform: translateY(40px); transition: 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67) all; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* Lotes Bloqueados (Efeito Onde) */
+        /* Bônus High Tech Grid */
+        .tech-bonus-section {
+            background-color: #000000;
+            background-image: 
+                linear-gradient(rgba(142, 115, 91, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(142, 115, 91, 0.15) 1px, transparent 1px);
+            background-size: 45px 45px;
+            position: relative;
+        }
+        .glow-text { text-shadow: 0 0 15px rgba(205, 127, 50, 0.6); }
+
         .lote-blocked { filter: grayscale(1) blur(2px); opacity: 0.25; pointer-events: none; }
-        
-        /* Botão Flutuante WhatsApp */
         .whatsapp-float {
             position: fixed; bottom: 30px; left: 30px; background: #25d366;
             width: 60px; height: 60px; border-radius: 50%; display: flex;
@@ -87,10 +91,6 @@
             font-weight: 700; transition: all 0.5s; cursor: pointer;
         }
         .btn-luxury:hover { background: var(--dark); color: var(--sand); }
-
-        /* Estilização Premium do Mapa do Google */
-        iframe { border-radius: 12px; filter: grayscale(1) contrast(95%); transition: all 0.5s ease; }
-        iframe:hover { filter: grayscale(0) contrast(100%); }
     </style>
 </head>
 <body>
@@ -129,7 +129,7 @@
                 <div class="text-gray-600 leading-relaxed space-y-8 text-base">
                     <p>A Oficina Digital Premium foi arquitetada para o dono de negócio que entende que o tempo é o seu ativo mais valioso. No Hub Salvador vamos unificar sua visão comercial com ferramentas táticas que operam de forma independente.</p>
                     <p>Muitos empresários se perdem no ruído operacional das redes sociais e esquecem que o digital deve ser uma máquina previsível de faturamento. Nossa missão é entregar clareza tática. Vamos configurar sua Inteligência Artificial para gerar demanda qualificada e estruturar seu CRM para que cada lead seja cultivado com precisão de elite.</p>
-                    <p>Você aprenderá a delegar tarefas pesadas para a tecnologia liberando sua mente para a expansão e o networking estratégico. É o momento de abandonar as tentativas amadoras e assumir um protocolo de escala real com quem domina o crescimento nos maiores players do país. O futuro da sua empresa exige uma decisão estratégica hoje.</p>
+                    <p>Você aprenderá a delegar tarefas pesadas para a tecnologia liberando sua mente para a expansão e o networking estratégico. É o momento de abandonar as tentativas amadoras e assumir um protocolo de escala real com quem domina o crescimento nos maiores players do país.</p>
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-6">
@@ -143,50 +143,58 @@
         </div>
     </section>
 
-    <section class="py-20 bg-white px-6 border-y border-gray-100">
-        <div class="max-w-5xl mx-auto reveal">
-            <div class="bg-[#fcfaf7] p-16 border border-terracotta/10 rounded-2xl shadow-sm">
-                <h2 class="serif text-4xl mb-10 text-center text-black">Benefício Exclusivo: Sorteio ChatGPT Plus 🤖</h2>
-                <p class="text-center text-sm text-gray-600 mb-12 max-w-2xl mx-auto">Sortearemos 3 licenças anuais do ChatGPT Plus. Uma ferramenta indispensável que hoje custa R$ 99,00 mensais e oferece o ápice da inteligência artificial para o seu negócio.</p>
-                <div class="grid md:grid-cols-2 gap-10 text-xs leading-relaxed text-gray-500 uppercase tracking-widest font-semibold">
-                    <ul class="space-y-6">
-                        <li>✨ Acesso antecipado ao modelo principal GPT 5.3</li>
-                        <li>✨ Modelos avançados de raciocínio e modo agente</li>
-                        <li>✨ Criação de imagens ampliada e muito mais rápida</li>
-                        <li>✨ Pesquisa aprofundada expandida e memória de contexto</li>
+    <section class="py-24 tech-bonus-section px-6 overflow-hidden">
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="text-terracotta font-black tracking-[0.5em] text-[10px] mb-4 block uppercase">// ACESSO ANTECIPADO</span>
+                <h2 class="serif text-5xl md:text-7xl text-white glow-text mb-6">Sorteio ChatGPT Plus</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-sm leading-relaxed">Sortearemos 3 licenças anuais do ChatGPT Plus. O motor de inteligência artificial mais avançado do mundo configurado para o seu faturamento.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 reveal">
+                <div class="bg-white/5 backdrop-blur-sm p-10 border border-white/10 rounded-sm">
+                    <h3 class="text-terracotta font-black text-xs uppercase tracking-widest mb-8">Arquitetura GPT 5.3</h3>
+                    <ul class="space-y-6 text-xs text-gray-300 font-medium tracking-wide uppercase">
+                        <li>⚡ Modelos avançados de raciocínio e modo agente</li>
+                        <li>⚡ Mais mensagens e uploads de arquivos pesados</li>
+                        <li>⚡ Criação de imagens ampliada e processamento rápido</li>
+                        <li>⚡ Pesquisa aprofundada expandida e memória maior</li>
                     </ul>
-                    <ul class="space-y-6">
-                        <li>✨ Projetos e GPTs personalizados para o seu mercado</li>
-                        <li>✨ Agente Codex e geração de vídeos no Sora</li>
-                        <li>✨ Mais mensagens e uploads de arquivos de alta carga</li>
-                        <li>✨ Acesso prioritário a todos os novos recursos globais</li>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm p-10 border border-white/10 rounded-sm">
+                    <h3 class="text-terracotta font-black text-xs uppercase tracking-widest mb-8">Recursos Sora & Codex</h3>
+                    <ul class="space-y-6 text-xs text-gray-300 font-medium tracking-wide uppercase">
+                        <li>⚡ Projetos e GPTs personalizados para sua empresa</li>
+                        <li>⚡ Geração de vídeos realistas no Sora</li>
+                        <li>⚡ Contexto ampliado para análise de grandes dados</li>
+                        <li>⚡ Acesso prioritário a todos os novos lançamentos</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-16 bg-[#fcfaf7] px-6">
+    <section class="py-20 bg-[#fcfaf7] px-6">
         <div class="max-w-6xl mx-auto text-center">
             <h2 class="serif text-4xl mb-20">Comandantes da Jornada</h2>
             <div class="grid md:grid-cols-3 gap-20">
-                <div class="reveal">
+                <div class="reveal text-center">
                     <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" class="w-44 h-44 rounded-full mx-auto mb-8 object-cover shadow-2xl border-4 border-white">
-                    <h4 class="font-bold uppercase text-sm mb-2">Leonardo Santos</h4>
+                    <h4 class="font-bold uppercase text-sm mb-2 text-black">Leonardo Santos</h4>
                     <p class="text-[10px] text-terracotta font-black mb-4 uppercase tracking-widest">will bank • Globo • Akoma Lab</p>
-                    <p class="text-xs text-gray-400 leading-relaxed">Expert em Product Marketing e Growth aplicado ao faturamento real.</p>
+                    <p class="text-xs text-gray-400">Expert em Product Marketing e Growth aplicado ao faturamento.</p>
                 </div>
-                <div class="reveal">
+                <div class="reveal text-center">
                     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80" class="w-44 h-44 rounded-full mx-auto mb-8 object-cover shadow-2xl border-4 border-white">
-                    <h4 class="font-bold uppercase text-sm mb-2">Lorraine Sampaio</h4>
+                    <h4 class="font-bold uppercase text-sm mb-2 text-black">Lorraine Sampaio</h4>
                     <p class="text-[10px] text-terracotta font-black mb-4 uppercase tracking-widest">Agência LeBurnout</p>
-                    <p class="text-xs text-gray-400 leading-relaxed">Especialista em Comunicação e Novos Negócios táticos para agências.</p>
+                    <p class="text-xs text-gray-400">Especialista em Comunicação e Novos Negócios táticos.</p>
                 </div>
-                <div class="reveal">
+                <div class="reveal text-center">
                     <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" class="w-44 h-44 rounded-full mx-auto mb-8 object-cover shadow-2xl border-4 border-white">
-                    <h4 class="font-bold uppercase text-sm mb-2">Nyere Carvalho</h4>
+                    <h4 class="font-bold uppercase text-sm mb-2 text-black">Nyere Carvalho</h4>
                     <p class="text-[10px] text-terracotta font-black mb-4 uppercase tracking-widest">Gerente Íon Itaú</p>
-                    <p class="text-xs text-gray-400 leading-relaxed">Liderança em Comunicação Corporativa e Gestão de Relacionamento.</p>
+                    <p class="text-xs text-gray-400">Liderança em Comunicação Corporativa e Relacionamento.</p>
                 </div>
             </div>
         </div>
@@ -194,9 +202,7 @@
 
     <section class="py-24 bg-[#2d241e] text-[#f4f1ea] px-6">
         <div class="max-w-5xl mx-auto">
-            <h2 class="serif text-center text-4xl mb-8 reveal">Dinâmicas e Criatividade</h2>
-            <p class="text-center text-sm opacity-60 mb-20 max-w-2xl mx-auto reveal">Nossa agenda foi desenhada para uma imersão produtiva e sem ruídos. Focaremos no que realmente move o ponteiro do seu lucro.</p>
-            
+            <h2 class="serif text-center text-4xl mb-20 reveal">Dinâmicas e Criatividade</h2>
             <div class="grid md:grid-cols-2 gap-10 reveal">
                 <div class="border border-white/5 p-10 rounded-xl bg-white/5">
                     <div class="flex justify-between items-center mb-8">
@@ -204,9 +210,8 @@
                         <span class="text-[9px] uppercase opacity-40 font-bold tracking-[0.3em]">START TÁTICO</span>
                     </div>
                     <h4 class="font-bold mb-6 uppercase text-xs tracking-widest">Redes Sociais e Autoridade</h4>
-                    <p class="text-xs opacity-70 leading-relaxed">Domínio do posicionamento de marca e uso de apps para criação profissional. Estratégias de parcerias e análise de métricas reais para MPE.</p>
+                    <p class="text-xs opacity-70 leading-relaxed">Domínio do posicionamento de marca e apps essenciais para criação profissional. Estratégias de parcerias e análise de métricas reais para MPE.</p>
                 </div>
-
                 <div class="border border-white/5 p-10 rounded-xl bg-white/5">
                     <div class="flex justify-between items-center mb-8">
                         <span class="text-terracotta font-black text-2xl tracking-tighter">11:00</span>
@@ -215,7 +220,6 @@
                     <h4 class="font-bold mb-6 uppercase text-xs tracking-widest">Automação de Vendas</h4>
                     <p class="text-xs opacity-70 leading-relaxed">Mão na massa para configurar sua Inteligência Artificial. Ativação de canais de comunicação para vender no automático com o uso de IA avançada.</p>
                 </div>
-
                 <div class="border border-white/5 p-10 rounded-xl bg-white/5">
                     <div class="flex justify-between items-center mb-8">
                         <span class="text-terracotta font-black text-2xl tracking-tighter">14:00</span>
@@ -224,7 +228,6 @@
                     <h4 class="font-bold mb-6 uppercase text-xs tracking-widest">Laboratório Canvas e CRM</h4>
                     <p class="text-xs opacity-70 leading-relaxed">Aplicação do método Canvas no seu negócio e implementação tática de CRM. Primeiros passos reais no tráfego pago para tração imediata.</p>
                 </div>
-
                 <div class="border border-white/5 p-10 rounded-xl bg-white/5">
                     <div class="flex justify-between items-center mb-8">
                         <span class="text-terracotta font-black text-2xl tracking-tighter">16:00</span>
@@ -244,7 +247,6 @@
                 Investir na Oficina Digital Premium é garantir o futuro estratégico do seu faturamento. Oferecemos pagamento facilitado em até <strong class="text-black">10 parcelas sem juros no cartão</strong>. O lote inicial possui valor reduzido para incentivar os primeiros empresários que buscam escala. Não deixe para amanhã a decisão que mudará seu patamar digital ainda este ano.
             </p>
         </div>
-
         <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto mb-20 px-6">
             <div class="bg-white p-14 border-2 border-terracotta shadow-2xl reveal relative transform scale-105">
                 <span class="bg-terracotta text-white px-5 py-1 text-[9px] font-bold absolute -top-4 left-1/2 -translate-x-1/2 tracking-[0.2em] uppercase">Ativo</span>
@@ -258,34 +260,21 @@
     </section>
 
     <section class="py-20 px-6 bg-white border-t border-gray-100">
-        <div class="max-w-5xl mx-auto text-center reveal">
+        <div class="max-w-6xl mx-auto text-center reveal">
             <h2 class="serif text-4xl mb-6">Onde a mágica acontece</h2>
-            <p class="text-terracotta font-bold text-xs uppercase tracking-widest mb-12">Hub Salvador • Comércio</p>
+            <p class="text-terracotta font-bold text-xs uppercase tracking-widest mb-16">Hub Salvador • Comércio</p>
             
-            <div class="w-full mb-16 shadow-2xl rounded-xl overflow-hidden border border-gray-100">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m13!1d3888.750567116892!2d-38.51443658517855!3d-12.973410990855!2m3!1f0!2f0!3f0!3m2!1i1024!2i1i1024!4f13.1!3m3!1m2!1s0x71604f86d6349d7%3A0xe9741c905e941c7e!2sHub%20Salvador!5e0!3m2!1spt-BR!2sbr!4v1709234567890!5m2!1spt-BR!2sbr" 
-                    width="100%" 
-                    height="450" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6 mb-16 px-6">
-                <div class="arch h-72 reveal">
+            <div class="grid md:grid-cols-3 gap-6 mb-16">
+                <div class="arch h-80 reveal">
                     <img src="https://aloalobahia.com/images/p/husbjjjsssse_alo_alo_bahia.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
                 </div>
-                <div class="arch h-72 mt-12 reveal">
+                <div class="arch h-80 mt-12 reveal">
                     <img src="https://midias.correio24horas.com.br/2023/05/21/-1650270.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
                 </div>
-                <div class="arch h-72 reveal">
+                <div class="arch h-80 reveal">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStXSj2BiTq1elmE6Uxv-ZZdwDW_gbTo0Gixg&s" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
                 </div>
             </div>
-
             <p class="text-xs text-gray-500 font-bold uppercase tracking-[0.4em] leading-loose">
                 Avenida da França, 393 2º andar Hub • Comércio, Salvador • BA, 40010 000
             </p>
@@ -301,7 +290,6 @@
     </footer>
 
     <script>
-        // SCRIPT DA AGENDA LATERAL CADENTE
         window.addEventListener('scroll', () => {
             const scroll = window.scrollY;
             document.querySelectorAll('.agenda-item').forEach((item, index) => {
@@ -310,7 +298,6 @@
             });
         });
 
-        // SCRIPT DE ANIMAÇÃO DE REVELAÇÃO AO SCROLL (Intersection Observer)
         const obs = new IntersectionObserver((es) => {
             es.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
         }, { threshold: 0.1 });
