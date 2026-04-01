@@ -1,5 +1,5 @@
 # akoma-lab
-# 🌿 Akoma Lab & Marketing — Evolving Dreams
+# 🌿 Akoma Lab & Marketing
 
 > "Traduzir sonhos gera valor."
 
