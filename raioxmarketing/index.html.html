@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Akoma | Raio-X de Marketing Estratégico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card: #141414;
+            --terracota: #c35b3e;
+            --text: #fdf8f5;
+            --text-dim: #b6ada9;
+            --line: rgba(255,255,255,0.08);
+            --success: #79c27d;
+            --warning: #f3b34c;
+            --danger: #dd6b6b;
+            --radius: 24px;
+            --transition: all 0.3s ease;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0; background: var(--bg); color: var(--text);
+            font-family: 'Roboto', sans-serif; line-height: 1.6; overflow-x: hidden;
+        }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 400; margin: 0; }
+
+        .container { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+        
+        /* Nav */
+        nav {
+            position: sticky; top: 20px; z-index: 100;
+            background: rgba(20,20,20,0.8); backdrop-filter: blur(12px);
+            padding: 15px 25px; border-radius: 50px; border: 1px solid var(--line);
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 20px;
+        }
+        .brand { font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; display: flex; align-items: center; gap: 10px; }
+        .dot { width: 8px; height: 8px; background: var(--terracota); border-radius: 50%; box-shadow: 0 0 10px var(--terracota); }
+
+        /* Lead Gate */
+        #leadGate {
+            position: fixed; inset: 0; z-index: 2000; background: var(--bg);
+            display: flex; align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal {
+            background: var(--card); padding: 40px; border-radius: var(--radius);
+            border: 1px solid var(--terracota); width: min(600px, 100%);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* Forms */
+        .field { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-dim); }
+        input, select, textarea {
+            width: 100%; background: #1b1b1b; border: 1px solid var(--line);
+            padding: 12px; border-radius: 12px; color: white; font: inherit; outline: none;
+        }
+        input:focus, select:focus { border-color: var(--terracota); }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 28px; border-radius: 50px; border: none; font-weight: 700;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            transition: var(--transition); display: inline-flex; align-items: center; gap: 10px;
+            text-decoration: none; font-size: 0.8rem;
+        }
+        .btn-p { background: var(--terracota); color: white; }
+        .btn-p:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(195,91,62,0.3); }
+        .btn-s { background: transparent; border: 1px solid var(--line); color: var(--text); }
+
+        /* Hero */
+        .hero { padding: 80px 0; text-align: center; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1; margin-bottom: 20px; }
+        .hero span { color: var(--terracota); font-style: italic; }
+
+        /* Section */
+        .section { padding: 60px 0; border-top: 1px solid var(--line); }
+        .q-card { background: var(--card); padding: 30px; border-radius: var(--radius); margin-bottom: 30px; border: 1px solid var(--line); }
+        
+        /* Ranges */
+        .range-box { margin-top: 15px; }
+        .range-header { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 5px; }
+        input[type="range"] { accent-color: var(--terracota); margin: 10px 0; }
+
+        /* Results */
+        #resultado { display: none; }
+        #resultado.show { display: block; }
+        .score-circle {
+            width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--terracota);
+            display: grid; place-items: center; font-size: 3rem; font-weight: 700; margin: 0 auto 20px;
+        }
+        .pillar-report { margin-top: 40px; display: grid; gap: 30px; }
+        .pillar-item { background: #1a1a1a; padding: 25px; border-radius: var(--radius); border-left: 5px solid var(--terracota); }
+        .pillar-item h3 { color: var(--terracota); margin-bottom: 10px; }
+        .p-text { color: var(--text-dim); font-size: 1rem; }
+
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+        
+        /* Estilo exclusivo para PDF */
+        .pdf-only { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="leadGate">
+        <div class="modal">
+            <div class="brand"><div class="dot"></div> Akoma Consultoria</div>
+            <h2 style="margin: 20px 0 10px;">Inicie seu Diagnóstico</h2>
+            <p style="color:var(--text-dim); margin-bottom: 30px;">Preencha para liberar o acesso à ferramenta estratégica.</p>
+            <form id="leadForm">
+                <div class="field">
+                    <label>Seu Nome</label>
+                    <input type="text" id="l_nome" required placeholder="Leo">
+                </div>
+                <div class="field">
+                    <label>WhatsApp</label>
+                    <input type="tel" id="l_whatsapp" required placeholder="(00) 00000-0000">
+                </div>
+                <div class="field">
+                    <label>Nome da Empresa</label>
+                    <input type="text" id="l_empresa" required placeholder="Minha Empresa Ltda">
+                </div>
+                <button type="submit" class="btn btn-p" style="width: 100%;">Liberar Raio-X</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app" style="opacity: 0.3; pointer-events: none;">
+        <nav class="container">
+            <div class="brand"><div class="dot"></div> Akoma · Raio-X</div>
+            <div><a href="#resultado" class="btn btn-s" style="padding: 8px 15px;">Ir para resultado</a></div>
+        </nav>
+
+        <header class="hero container">
+            <h1>Diagnóstico de <span>Marketing</span> de Alta Performance</h1>
+            <p style="max-width: 700px; margin: 0 auto; color: var(--text-dim);">Avalie a maturidade da sua operação comercial e de marketing. O resultado será um relatório detalhado com prioridades de execução.</p>
+        </header>
+
+        <main class="container">
+            <section class="section">
+                <div class="q-card">
+                    <h4>1. Presença & Conteúdo</h4>
+                    <div class="grid-2" style="margin-top:20px;">
+                        <div class="field">
+                            <label>Frequência de postagens semanais?</label>
+                            <select id="q_posts">
+                                <option value="0">Não posto / Raramente</option>
+                                <option value="1">1x por semana</option>
+                                <option value="3">2 a 3x por semana</option>
+                                <option value="7">Todos os dias</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Nota para suas Redes Sociais (0-10)</label>
+                            <input type="number" id="q_nota_redes" min="0" max="10" value="5">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="q-card">
+                    <h4>2. Comercial & Vendas</h4>
+                    <div class="grid-2" style="margin-top:20px;">
+                        <div class="field">
+                            <label>Dificuldade em fechar novos clientes?</label>
+                            <select id="q_fechamento">
+                                <option value="high">Muita dificuldade (Leads desqualificados)</option>
+                                <option value="mid">Dificuldade média (Processo lento)</option>
+                                <option value="low">Baixa dificuldade (Fecho bem)</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Como sua imagem deveria ser trabalhada?</label>
+                            <input type="text" id="q_imagem" placeholder="Ex: Mais autoridade, mais proximidade...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="q-card">
+                    <h4>3. Notas por Pilares (Maturidade)</h4>
+                    <div id="sliders"></div>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 50px;">
+                    <button class="btn btn-p" id="gerarBtn" style="font-size: 1.1rem; padding: 20px 40px;">Gerar Diagnóstico Profundo</button>
+                </div>
+            </section>
+
+            <section id="resultado" class="section">
+                <div id="pdfContent">
+                    <div style="text-align: center; margin-bottom: 40px;">
+                        <div class="score-circle" id="notaGeral">0.0</div>
+                        <h2 id="resEmpresa">Empresa</h2>
+                        <p id="resIntro" class="p-text" style="max-width: 800px; margin: 10px auto;"></p>
+                    </div>
+
+                    <div class="pillar-report" id="detalhesPilares">
+                        </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 50px; display: flex; justify-content: center; gap: 20px;">
+                    <button class="btn btn-s" onclick="baixarPDF()">Baixar Relatório em PDF</button>
+                    <a href="https://wa.me/55SEUNUMERO" class="btn btn-p">Agendar Consultoria Gratuita</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const scriptURL = 'SUA_URL_DO_APPSCRIPT'; // Atualize após o deploy
+
+        const pilares = [
+            { id: 'pos', nome: 'Posicionamento', icon: '🎯', 
+              low: 'Seu posicionamento atual é genérico. O mercado te enxerga como "mais um", forçando a disputa por preço. É urgente definir uma Proposta Única de Valor.',
+              mid: 'Você tem diferenciais, mas eles não estão claros na comunicação. O cliente demora a entender por que deve escolher você e não o concorrente.',
+              high: 'Excelente. Sua marca ocupa um espaço claro na mente do consumidor. Você é autoridade no seu nicho e atrai o público certo.' },
+            { id: 'acq', nome: 'Aquisição de Clientes', icon: '📈',
+              low: 'Você depende de indicações e sorte. Não há um canal previsível de entrada de novos clientes, o que torna o crescimento instável.',
+              mid: 'Existem canais ativos, mas o custo por aquisição (CAC) é alto ou oscila muito. Falta escala e previsibilidade nos anúncios.',
+              high: 'Máquina de vendas ativa. Você sabe exatamente quanto investir para trazer um novo cliente e consegue escalar o investimento com segurança.' },
+            { id: 'com', nome: 'Processo Comercial', icon: '🤝',
+              low: 'Vendas acontecem no improviso. Não há script, CRM ou follow-up estruturado. Muitos leads "esfriam" por falta de atendimento rápido.',
+              mid: 'O comercial funciona, mas é artesanal. Depende muito do talento individual e menos de um processo que pode ser replicado.',
+              high: 'Processo impecável. Uso de CRM, scripts validados e tempo de resposta imediato. O marketing e o comercial estão em total sintonia.' },
+            { id: 'brand', nome: 'Branding & Imagem', icon: '✨',
+              low: 'Sua imagem visual e narrativa estão datadas ou amadoras. Isso gera desconfiança em tickets mais altos.',
+              mid: 'A imagem é profissional, mas falta "alma". O conteúdo não gera conexão emocional nem desejo profundo de marca.',
+              high: 'Marca forte. Sua identidade visual e narrativa transmitem luxo, autoridade ou confiança absoluta, facilitando o fechamento.' }
+        ];
+
+        // Gerar Sliders dinâmicos
+        const sliderContainer = document.getElementById('sliders');
+        pilares.forEach(p => {
+            sliderContainer.innerHTML += `
+                <div class="range-box">
+                    <div class="range-header"><span>${p.icon} ${p.nome}</span><strong id="val_${p.id}">5</strong></div>
+                    <input type="range" id="${p.id}" min="0" max="10" value="5" oninput="document.getElementById('val_${p.id}').innerText = this.value">
+                </div>
+            `;
+        });
+
+        // Lógica do Lead Gate
+        document.getElementById('leadForm').onsubmit = (e) => {
+            e.preventDefault();
+            document.getElementById('leadGate').style.display = 'none';
+            document.getElementById('app').style.opacity = '1';
+            document.getElementById('app').style.pointerEvents = 'all';
+            window.scrollTo(0,0);
+        };
+
+        // Gerar Resultado
+        document.getElementById('gerarBtn').onclick = async () => {
+            const btn = document.getElementById('gerarBtn');
+            btn.innerText = "Analisando dados...";
+            
+            const nome = document.getElementById('l_nome').value;
+            const empresa = document.getElementById('l_empresa').value;
+            const posts = document.getElementById('q_posts').value;
+            const redesNota = document.getElementById('q_nota_redes').value;
+            const fechamento = document.getElementById('q_fechamento').value;
+            const imagem = document.getElementById('q_imagem').value;
+
+            // Cálculo Nota Geral
+            let soma = 0;
+            let reportHTML = '';
+            
+            pilares.forEach(p => {
+                const val = parseInt(document.getElementById(p.id).value);
+                soma += val;
+                let text = val < 4 ? p.low : (val < 8 ? p.mid : p.high);
+                
+                reportHTML += `
+                    <div class="pillar-item">
+                        <h3>${p.icon} ${p.nome}: ${val}/10</h3>
+                        <p class="p-text">${text}</p>
+                    </div>
+                `;
+            });
+
+            const media = (soma / pilares.length).toFixed(1);
+            document.getElementById('notaGeral').innerText = media;
+            document.getElementById('resEmpresa').innerText = empresa;
+            document.getElementById('detalhesPilares').innerHTML = reportHTML;
+            
+            const intro = `Olá, ${nome}. Com base no seu volume de ${posts} posts semanais e sua nota ${redesNota} para redes sociais, identificamos que seu principal desafio em relação à imagem ("${imagem}") está diretamente ligado ao seu pilar de ${media < 6 ? 'Posicionamento' : 'Escala'}.`;
+            document.getElementById('resIntro').innerText = intro;
+
+            document.getElementById('resultado').classList.add('show');
+            btn.innerText = "Gerar Diagnóstico Profundo";
+            
+            // Scroll para resultado
+            document.getElementById('resultado').scrollIntoView({behavior: 'smooth'});
+
+            // Enviar para Planilha (Opcional - Ative se tiver o ScriptURL)
+            if(scriptURL !== 'SUA_URL_DO_APPSCRIPT') {
+                fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify({ nome, empresa, media, imagem, whatsapp: document.getElementById('l_whatsapp').value })
+                });
+            }
+        };
+
+        function baixarPDF() {
+            const element = document.getElementById('pdfContent');
+            const opt = {
+                margin: 10,
+                filename: `RaioX_Akoma_${document.getElementById('l_empresa').value}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, backgroundColor: '#0a0a0a' },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>
