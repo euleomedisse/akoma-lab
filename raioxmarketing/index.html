@@ -6,6 +6,7 @@
     <title>Akoma | Raio-X de Marketing Estratégico</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
@@ -16,9 +17,6 @@
             --text: #fdf8f5;
             --text-dim: #b6ada9;
             --line: rgba(255,255,255,0.08);
-            --success: #79c27d;
-            --warning: #f3b34c;
-            --danger: #dd6b6b;
             --radius: 24px;
             --transition: all 0.3s ease;
         }
@@ -36,7 +34,7 @@
         /* Nav */
         nav {
             position: sticky; top: 20px; z-index: 100;
-            background: rgba(20,20,20,0.8); backdrop-filter: blur(12px);
+            background: rgba(20,20,20,0.85); backdrop-filter: blur(15px);
             padding: 15px 25px; border-radius: 50px; border: 1px solid var(--line);
             display: flex; justify-content: space-between; align-items: center;
             margin-top: 20px;
@@ -52,60 +50,56 @@
         .modal {
             background: var(--card); padding: 40px; border-radius: var(--radius);
             border: 1px solid var(--terracota); width: min(600px, 100%);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        /* Forms */
+        /* Inputs */
         .field { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-dim); }
+        label { display: block; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
         input, select, textarea {
             width: 100%; background: #1b1b1b; border: 1px solid var(--line);
-            padding: 12px; border-radius: 12px; color: white; font: inherit; outline: none;
+            padding: 14px; border-radius: 12px; color: white; font: inherit; outline: none; transition: var(--transition);
         }
-        input:focus, select:focus { border-color: var(--terracota); }
+        input:focus { border-color: var(--terracota); }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
         /* Buttons */
         .btn {
-            padding: 14px 28px; border-radius: 50px; border: none; font-weight: 700;
+            padding: 16px 32px; border-radius: 50px; border: none; font-weight: 700;
             cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
             transition: var(--transition); display: inline-flex; align-items: center; gap: 10px;
             text-decoration: none; font-size: 0.8rem;
         }
         .btn-p { background: var(--terracota); color: white; }
-        .btn-p:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(195,91,62,0.3); }
+        .btn-p:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(195,91,62,0.4); }
         .btn-s { background: transparent; border: 1px solid var(--line); color: var(--text); }
 
-        /* Hero */
-        .hero { padding: 80px 0; text-align: center; }
-        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1; margin-bottom: 20px; }
+        /* Main Content */
+        .hero { padding: 100px 0 60px; text-align: center; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); line-height: 1.1; margin-bottom: 20px; }
         .hero span { color: var(--terracota); font-style: italic; }
 
-        /* Section */
         .section { padding: 60px 0; border-top: 1px solid var(--line); }
-        .q-card { background: var(--card); padding: 30px; border-radius: var(--radius); margin-bottom: 30px; border: 1px solid var(--line); }
+        .q-card { background: var(--card); padding: 35px; border-radius: var(--radius); margin-bottom: 30px; border: 1px solid var(--line); }
         
-        /* Ranges */
-        .range-box { margin-top: 15px; }
-        .range-header { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 5px; }
-        input[type="range"] { accent-color: var(--terracota); margin: 10px 0; }
+        /* Sliders */
+        .range-box { margin-top: 25px; }
+        .range-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        input[type="range"] { accent-color: var(--terracota); cursor: pointer; }
 
-        /* Results */
-        #resultado { display: none; }
+        /* Resultado Area */
+        #resultado { display: none; margin-top: 40px; }
         #resultado.show { display: block; }
         .score-circle {
-            width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--terracota);
-            display: grid; place-items: center; font-size: 3rem; font-weight: 700; margin: 0 auto 20px;
+            width: 160px; height: 160px; border-radius: 50%; border: 3px solid var(--terracota);
+            display: grid; place-items: center; font-size: 3.5rem; font-weight: 700; margin: 0 auto 20px;
+            background: radial-gradient(circle, rgba(195,91,62,0.15) 0%, transparent 70%);
         }
-        .pillar-report { margin-top: 40px; display: grid; gap: 30px; }
-        .pillar-item { background: #1a1a1a; padding: 25px; border-radius: var(--radius); border-left: 5px solid var(--terracota); }
-        .pillar-item h3 { color: var(--terracota); margin-bottom: 10px; }
-        .p-text { color: var(--text-dim); font-size: 1rem; }
+        .pillar-report { display: grid; gap: 25px; margin-top: 40px; }
+        .pillar-item { background: #181818; padding: 30px; border-radius: var(--radius); border-left: 4px solid var(--terracota); }
+        .pillar-item h3 { color: var(--terracota); margin-bottom: 12px; font-size: 1.5rem; }
+        .p-text { color: var(--text-dim); font-size: 1.05rem; line-height: 1.7; }
 
         @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
-        
-        /* Estilo exclusivo para PDF */
-        .pdf-only { display: none; }
     </style>
 </head>
 <body>
@@ -113,140 +107,140 @@
     <div id="leadGate">
         <div class="modal">
             <div class="brand"><div class="dot"></div> Akoma Consultoria</div>
-            <h2 style="margin: 20px 0 10px;">Inicie seu Diagnóstico</h2>
-            <p style="color:var(--text-dim); margin-bottom: 30px;">Preencha para liberar o acesso à ferramenta estratégica.</p>
+            <h2 style="margin: 20px 0 10px;">Diagnóstico Estratégico</h2>
+            <p style="color:var(--text-dim); margin-bottom: 30px;">Identifique-se para liberar o acesso ao Raio-X.</p>
             <form id="leadForm">
-                <div class="field">
-                    <label>Seu Nome</label>
-                    <input type="text" id="l_nome" required placeholder="Leo">
-                </div>
-                <div class="field">
-                    <label>WhatsApp</label>
-                    <input type="tel" id="l_whatsapp" required placeholder="(00) 00000-0000">
-                </div>
-                <div class="field">
-                    <label>Nome da Empresa</label>
-                    <input type="text" id="l_empresa" required placeholder="Minha Empresa Ltda">
-                </div>
-                <button type="submit" class="btn btn-p" style="width: 100%;">Liberar Raio-X</button>
+                <div class="field"><label>Seu Nome</label><input type="text" id="l_nome" required placeholder="Leo"></div>
+                <div class="field"><label>WhatsApp</label><input type="tel" id="l_whatsapp" required placeholder="(00) 00000-0000"></div>
+                <div class="field"><label>Empresa</label><input type="text" id="l_empresa" required placeholder="Nome da Empresa"></div>
+                <button type="submit" class="btn btn-p" style="width: 100%;">Acessar Ferramenta</button>
             </form>
         </div>
     </div>
 
-    <div id="app" style="opacity: 0.3; pointer-events: none;">
+    <div id="app" style="opacity: 0.1; pointer-events: none; transition: 0.5s;">
         <nav class="container">
-            <div class="brand"><div class="dot"></div> Akoma · Raio-X</div>
-            <div><a href="#resultado" class="btn btn-s" style="padding: 8px 15px;">Ir para resultado</a></div>
+            <div class="brand"><div class="dot"></div> Akoma · Marketing Intelligence</div>
+            <a href="#resultado" class="btn btn-s" style="padding: 10px 20px; font-size: 0.7rem;">Ver Resultado</a>
         </nav>
 
         <header class="hero container">
-            <h1>Diagnóstico de <span>Marketing</span> de Alta Performance</h1>
-            <p style="max-width: 700px; margin: 0 auto; color: var(--text-dim);">Avalie a maturidade da sua operação comercial e de marketing. O resultado será um relatório detalhado com prioridades de execução.</p>
+            <h1>Raio-X de <span>Marketing</span> Profundo</h1>
+            <p style="max-width: 750px; margin: 0 auto; color: var(--text-dim); font-size: 1.1rem;">Responda às perguntas abaixo para mapear os gargalos da sua operação e receber um relatório consultivo completo.</p>
         </header>
 
         <main class="container">
             <section class="section">
                 <div class="q-card">
-                    <h4>1. Presença & Conteúdo</h4>
-                    <div class="grid-2" style="margin-top:20px;">
+                    <h4>Métricas de Visibilidade</h4>
+                    <div class="grid-2" style="margin-top:25px;">
                         <div class="field">
-                            <label>Frequência de postagens semanais?</label>
+                            <label>Volume de posts p/ semana</label>
                             <select id="q_posts">
                                 <option value="0">Não posto / Raramente</option>
                                 <option value="1">1x por semana</option>
                                 <option value="3">2 a 3x por semana</option>
-                                <option value="7">Todos os dias</option>
+                                <option value="7">Todos os dias (Frequência Alta)</option>
                             </select>
                         </div>
                         <div class="field">
-                            <label>Nota para suas Redes Sociais (0-10)</label>
+                            <label>Qual nota você dá para suas redes? (0-10)</label>
                             <input type="number" id="q_nota_redes" min="0" max="10" value="5">
                         </div>
                     </div>
                 </div>
 
                 <div class="q-card">
-                    <h4>2. Comercial & Vendas</h4>
-                    <div class="grid-2" style="margin-top:20px;">
+                    <h4>Eficiência Comercial</h4>
+                    <div class="grid-2" style="margin-top:25px;">
                         <div class="field">
-                            <label>Dificuldade em fechar novos clientes?</label>
+                            <label>Dificuldade em fechar clientes?</label>
                             <select id="q_fechamento">
-                                <option value="high">Muita dificuldade (Leads desqualificados)</option>
-                                <option value="mid">Dificuldade média (Processo lento)</option>
-                                <option value="low">Baixa dificuldade (Fecho bem)</option>
+                                <option value="high">Muita (Clientes pedem desconto ou somem)</option>
+                                <option value="mid">Média (Processo demora muito a fechar)</option>
+                                <option value="low">Baixa (Clientes chegam decididos)</option>
                             </select>
                         </div>
                         <div class="field">
-                            <label>Como sua imagem deveria ser trabalhada?</label>
-                            <input type="text" id="q_imagem" placeholder="Ex: Mais autoridade, mais proximidade...">
+                            <label>Como sua imagem deve ser percebida?</label>
+                            <input type="text" id="q_imagem" placeholder="Ex: Autoridade premium, mais humano...">
                         </div>
                     </div>
                 </div>
 
                 <div class="q-card">
-                    <h4>3. Notas por Pilares (Maturidade)</h4>
+                    <h4>Nível de Maturidade por Pilar</h4>
                     <div id="sliders"></div>
                 </div>
 
-                <div style="text-align: center; margin-bottom: 50px;">
-                    <button class="btn btn-p" id="gerarBtn" style="font-size: 1.1rem; padding: 20px 40px;">Gerar Diagnóstico Profundo</button>
+                <div style="text-align: center; margin: 50px 0;">
+                    <button class="btn btn-p" id="gerarBtn" style="font-size: 1.1rem; padding: 22px 50px;">Gerar Meu Relatório Completo</button>
                 </div>
             </section>
 
             <section id="resultado" class="section">
-                <div id="pdfContent">
-                    <div style="text-align: center; margin-bottom: 40px;">
+                <div id="pdfExportArea">
+                    <div style="text-align: center; margin-bottom: 50px;">
                         <div class="score-circle" id="notaGeral">0.0</div>
-                        <h2 id="resEmpresa">Empresa</h2>
-                        <p id="resIntro" class="p-text" style="max-width: 800px; margin: 10px auto;"></p>
+                        <h2 id="resEmpresa" style="font-size: 2.5rem; margin-bottom: 10px;">Empresa</h2>
+                        <p id="resIntro" class="p-text" style="max-width: 850px; margin: 0 auto;"></p>
                     </div>
 
-                    <div class="pillar-report" id="detalhesPilares">
-                        </div>
+                    <div class="pillar-report" id="detalhesPilares"></div>
+                    
+                    <div class="pillar-item" style="margin-top: 30px; border-left-color: #79c27d; background: rgba(121, 194, 125, 0.05);">
+                        <h3>Próximos Passos Sugeridos</h3>
+                        <p class="p-text" id="conclusaoEstrategica"></p>
+                    </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 50px; display: flex; justify-content: center; gap: 20px;">
-                    <button class="btn btn-s" onclick="baixarPDF()">Baixar Relatório em PDF</button>
-                    <a href="https://wa.me/55SEUNUMERO" class="btn btn-p">Agendar Consultoria Gratuita</a>
+                <div style="text-align: center; margin-top: 60px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                    <button class="btn btn-s" onclick="exportarRelatorio()">Baixar PDF Estratégico</button>
+                    <a href="https://wa.me/55SEUNUMERO" target="_blank" class="btn btn-p">Agendar Reunião de Plano de Ação</a>
                 </div>
             </section>
         </main>
+        
+        <footer class="container" style="padding: 60px 0; text-align: center; color: var(--text-dim); font-size: 0.8rem;">
+            © 2026 Akoma Marketing Intelligence · Diagnóstico de Uso Exclusivo
+        </footer>
     </div>
 
     <script>
-        const scriptURL = 'SUA_URL_DO_APPSCRIPT'; // Atualize após o deploy
+        // CONFIGURAÇÃO DE INTEGRAÇÃO
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyUJZqDS7YrZc2ZRrFcb85lW-JwaJhNhhKpdABE5H-uL_qneLOVE0xUuavp_-Q0_2VPtQ/exec';
 
-        const pilares = [
-            { id: 'pos', nome: 'Posicionamento', icon: '🎯', 
-              low: 'Seu posicionamento atual é genérico. O mercado te enxerga como "mais um", forçando a disputa por preço. É urgente definir uma Proposta Única de Valor.',
-              mid: 'Você tem diferenciais, mas eles não estão claros na comunicação. O cliente demora a entender por que deve escolher você e não o concorrente.',
-              high: 'Excelente. Sua marca ocupa um espaço claro na mente do consumidor. Você é autoridade no seu nicho e atrai o público certo.' },
-            { id: 'acq', nome: 'Aquisição de Clientes', icon: '📈',
-              low: 'Você depende de indicações e sorte. Não há um canal previsível de entrada de novos clientes, o que torna o crescimento instável.',
-              mid: 'Existem canais ativos, mas o custo por aquisição (CAC) é alto ou oscila muito. Falta escala e previsibilidade nos anúncios.',
-              high: 'Máquina de vendas ativa. Você sabe exatamente quanto investir para trazer um novo cliente e consegue escalar o investimento com segurança.' },
-            { id: 'com', nome: 'Processo Comercial', icon: '🤝',
-              low: 'Vendas acontecem no improviso. Não há script, CRM ou follow-up estruturado. Muitos leads "esfriam" por falta de atendimento rápido.',
-              mid: 'O comercial funciona, mas é artesanal. Depende muito do talento individual e menos de um processo que pode ser replicado.',
-              high: 'Processo impecável. Uso de CRM, scripts validados e tempo de resposta imediato. O marketing e o comercial estão em total sintonia.' },
-            { id: 'brand', nome: 'Branding & Imagem', icon: '✨',
-              low: 'Sua imagem visual e narrativa estão datadas ou amadoras. Isso gera desconfiança em tickets mais altos.',
-              mid: 'A imagem é profissional, mas falta "alma". O conteúdo não gera conexão emocional nem desejo profundo de marca.',
-              high: 'Marca forte. Sua identidade visual e narrativa transmitem luxo, autoridade ou confiança absoluta, facilitando o fechamento.' }
+        const pilaresConfig = [
+            { id: 'pos', nome: 'Posicionamento & Diferenciação', icon: '🎯', 
+              low: 'Seu negócio hoje é visto como uma commodity. Sem uma diferenciação clara, você sempre será escravo da comparação de preços, atraindo o cliente que busca o mais barato, e não o melhor. É necessário reconstruir sua Proposta Única de Valor.',
+              mid: 'Você tem bons diferenciais, mas eles estão "escondidos". Sua comunicação não faz justiça à qualidade da sua entrega, o que causa uma quebra de expectativa e perda de autoridade antes mesmo do primeiro contato comercial.',
+              high: 'Excelente. Você ocupa um lugar único na mente do seu cliente. Sua autoridade permite cobrar tickets mais altos sem resistência, pois o valor percebido precede a sua oferta comercial.' },
+            { id: 'acq', nome: 'Máquina de Aquisição', icon: '🚀',
+              low: 'Você vive no "marketing de esperança". Depende exclusivamente de indicação e boca a boca. Sem canais de aquisição previsíveis, sua empresa não é escalável e está vulnerável a qualquer oscilação de mercado.',
+              mid: 'Existem tentativas de tráfego pago ou prospecção, mas sem método. O custo por lead é instável e falta uma estratégia de conteúdo que converta atenção em demanda reprimida. Você está deixando dinheiro na mesa por falta de processo.',
+              high: 'Máquina de vendas validada. Você possui canais de tração previsíveis e sabe exatamente quanto precisa investir para gerar o volume de negócios desejado. O crescimento aqui é uma escolha matemática.' },
+            { id: 'com', nome: 'Processo de Fechamento', icon: '💰',
+              low: 'O seu comercial é um gargalo silencioso. Muitos interessados chegam, mas o tempo de resposta lento ou a falta de um script persuasivo fazem com que as oportunidades se percam. O marketing trabalha, mas o comercial não converte.',
+              mid: 'Há um esforço de vendas, mas falta estruturação de CRM e follow-up. O fechamento depende muito do "feeling" do vendedor e menos de um processo que garanta a máxima eficiência de cada lead recebido.',
+              high: 'Alta performance. Marketing e Vendas falam a mesma língua. Há monitoramento de taxas de conversão em cada etapa do funil e o processo de fechamento é fluido, rápido e profissional.' },
+            { id: 'brand', nome: 'Branding & Percepção de Valor', icon: '💎',
+              low: 'Sua embalagem (imagem) está inferior ao seu produto. Isso gera desconfiança. Clientes de alto nível dificilmente compram de marcas que não transmitem profissionalismo visual e narrativo absoluto.',
+              mid: 'O visual é correto, mas não é memorável. Falta uma narrativa de marca que gere conexão emocional. Você é visto como profissional, mas ainda não é visto como um objeto de desejo no seu mercado.',
+              high: 'Marca de Desejo. Sua comunicação visual e narrativa transmitem luxo e confiança. O branding trabalha para reduzir a barreira da venda, tornando o fechamento uma consequência natural da sua presença.' }
         ];
 
-        // Gerar Sliders dinâmicos
-        const sliderContainer = document.getElementById('sliders');
-        pilares.forEach(p => {
-            sliderContainer.innerHTML += `
+        // Inicializar Sliders
+        const sliderDiv = document.getElementById('sliders');
+        pilaresConfig.forEach(p => {
+            sliderDiv.innerHTML += `
                 <div class="range-box">
                     <div class="range-header"><span>${p.icon} ${p.nome}</span><strong id="val_${p.id}">5</strong></div>
-                    <input type="range" id="${p.id}" min="0" max="10" value="5" oninput="document.getElementById('val_${p.id}').innerText = this.value">
+                    <input type="range" id="${p.id}" min="0" max="10" value="5" style="width:100%" oninput="document.getElementById('val_${p.id}').innerText = this.value">
                 </div>
             `;
         });
 
-        // Lógica do Lead Gate
+        // Controle do Lead Gate
         document.getElementById('leadForm').onsubmit = (e) => {
             e.preventDefault();
             document.getElementById('leadGate').style.display = 'none';
@@ -255,64 +249,74 @@
             window.scrollTo(0,0);
         };
 
-        // Gerar Resultado
+        // Gerar Diagnóstico e Enviar Dados
         document.getElementById('gerarBtn').onclick = async () => {
             const btn = document.getElementById('gerarBtn');
-            btn.innerText = "Analisando dados...";
-            
-            const nome = document.getElementById('l_nome').value;
-            const empresa = document.getElementById('l_empresa').value;
-            const posts = document.getElementById('q_posts').value;
-            const redesNota = document.getElementById('q_nota_redes').value;
-            const fechamento = document.getElementById('q_fechamento').value;
-            const imagem = document.getElementById('q_imagem').value;
+            const originalText = btn.innerText;
+            btn.innerText = "Processando sua inteligência...";
+            btn.disabled = true;
 
-            // Cálculo Nota Geral
-            let soma = 0;
+            const dados = {
+                nome: document.getElementById('l_nome').value,
+                whatsapp: document.getElementById('l_whatsapp').value,
+                empresa: document.getElementById('l_empresa').value,
+                posts: document.getElementById('q_posts').value,
+                notaRedes: document.getElementById('q_nota_redes').value,
+                fechamento: document.getElementById('q_fechamento').value,
+                imagem: document.getElementById('q_imagem').value
+            };
+
+            let somaTotal = 0;
             let reportHTML = '';
             
-            pilares.forEach(p => {
-                const val = parseInt(document.getElementById(p.id).value);
-                soma += val;
-                let text = val < 4 ? p.low : (val < 8 ? p.mid : p.high);
-                
+            pilaresConfig.forEach(p => {
+                const nota = parseInt(document.getElementById(p.id).value);
+                somaTotal += nota;
+                let feedback = nota < 4 ? p.low : (nota < 8 ? p.mid : p.high);
                 reportHTML += `
                     <div class="pillar-item">
-                        <h3>${p.icon} ${p.nome}: ${val}/10</h3>
-                        <p class="p-text">${text}</p>
+                        <h3>${p.icon} ${p.nome}: ${nota}/10</h3>
+                        <p class="p-text">${feedback}</p>
                     </div>
                 `;
             });
 
-            const media = (soma / pilares.length).toFixed(1);
-            document.getElementById('notaGeral').innerText = media;
-            document.getElementById('resEmpresa').innerText = empresa;
+            const mediaFinal = (somaTotal / pilaresConfig.length).toFixed(1);
+            document.getElementById('notaGeral').innerText = mediaFinal;
+            document.getElementById('resEmpresa').innerText = dados.empresa;
             document.getElementById('detalhesPilares').innerHTML = reportHTML;
-            
-            const intro = `Olá, ${nome}. Com base no seu volume de ${posts} posts semanais e sua nota ${redesNota} para redes sociais, identificamos que seu principal desafio em relação à imagem ("${imagem}") está diretamente ligado ao seu pilar de ${media < 6 ? 'Posicionamento' : 'Escala'}.`;
-            document.getElementById('resIntro').innerText = intro;
 
+            // Lógica de Conclusão Estratégica
+            let conclusao = "";
+            if(mediaFinal < 5) conclusao = "Seu foco imediato deve ser Estabilização. Antes de investir em anúncios, você precisa consertar o seu posicionamento e sua imagem, ou irá queimar dinheiro atraindo o público errado.";
+            else if(mediaFinal < 8) conclusao = "Seu foco deve ser Otimização de Processos. Você já tem tração, mas está perdendo eficiência no meio do funil. O ajuste fino no seu comercial e branding pode dobrar seu lucro sem aumentar o investimento.";
+            else conclusao = "Seu foco é Escala Agressiva. Com fundamentos sólidos, sua empresa está pronta para dominar o mercado. O próximo passo é aumentar a pressão de aquisição e reforçar sua autoridade como líder do nicho.";
+            
+            document.getElementById('conclusaoEstrategica').innerText = conclusao;
+
+            const introText = `Análise executiva para ${dados.nome}. Considerando sua frequência de ${dados.posts} posts e a dificuldade de fechamento classificada como "${dados.fechamento}", seu score de ${mediaFinal} indica que a percepção de imagem desejada ("${dados.imagem}") ainda encontra barreiras operacionais importantes para ser consolidada.`;
+            document.getElementById('resIntro').innerText = introText;
+
+            // Mostrar resultado e subir botão
             document.getElementById('resultado').classList.add('show');
-            btn.innerText = "Gerar Diagnóstico Profundo";
-            
-            // Scroll para resultado
             document.getElementById('resultado').scrollIntoView({behavior: 'smooth'});
+            btn.innerText = originalText;
+            btn.disabled = false;
 
-            // Enviar para Planilha (Opcional - Ative se tiver o ScriptURL)
-            if(scriptURL !== 'SUA_URL_DO_APPSCRIPT') {
-                fetch(scriptURL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify({ nome, empresa, media, imagem, whatsapp: document.getElementById('l_whatsapp').value })
-                });
-            }
+            // Envio silencioso para a Planilha via Apps Script
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify({ ...dados, scoreGeral: mediaFinal })
+            }).catch(e => console.log("Erro no envio, mas o diagnóstico seguiu."));
         };
 
-        function baixarPDF() {
-            const element = document.getElementById('pdfContent');
+        // Exportar PDF
+        function exportarRelatorio() {
+            const element = document.getElementById('pdfExportArea');
             const opt = {
                 margin: 10,
-                filename: `RaioX_Akoma_${document.getElementById('l_empresa').value}.pdf`,
+                filename: `Diagnostico_Akoma_${document.getElementById('l_empresa').value}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, backgroundColor: '#0a0a0a' },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
