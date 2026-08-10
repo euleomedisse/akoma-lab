@@ -11,10 +11,21 @@
             --bg: #0a0a0a;
             --card-bg: #141414;
             --terracota: #c35b3e;
+            --accent-gold: #e3a662;
+            --ai-glow: #8f93e0;
             --text-main: #fdf8f5;
             --text-dim: #808080;
             --radius: 40px;
             --transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
 
         /* Fundo com Rabiscos de Lápis */
@@ -51,6 +62,28 @@
 
         .nav-glass a:hover { color: var(--terracota); }
 
+        /* Barra de Progresso de Scroll */
+        .scroll-progress {
+            position: fixed; top: 0; left: 0;
+            height: 2px; width: 0%;
+            background: linear-gradient(90deg, var(--terracota), var(--accent-gold));
+            z-index: 1100;
+            transition: width 0.1s linear;
+        }
+
+        /* Glow Ambiente que segue o cursor */
+        .cursor-glow {
+            position: fixed; top: 0; left: 0;
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(195, 91, 62, 0.12), transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            mix-blend-mode: screen;
+        }
+
         /* Lâmpada Flutuante */
         .lightbulb-scroll {
             position: fixed;
@@ -65,11 +98,89 @@
 
         /* Hero */
         .hero {
+            position: relative;
             height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; padding: 0 10%;
             background: linear-gradient(to bottom, rgba(10,10,10,0.4), var(--bg)), 
                         url('img/hero-bg.jpg') center/cover;
+            overflow: hidden;
+        }
+
+        /* Mesh gradient vivo, tons terracota + dourado */
+        .hero-mesh {
+            position: absolute; inset: 0; z-index: 0;
+            opacity: 0.55;
+            filter: blur(60px);
+            pointer-events: none;
+        }
+
+        .hero-mesh span {
+            position: absolute;
+            border-radius: 50%;
+            mix-blend-mode: screen;
+            will-change: transform;
+        }
+
+        .hero-mesh span:nth-child(1) {
+            width: 45vw; height: 45vw; top: -10%; left: -5%;
+            background: radial-gradient(circle, var(--terracota), transparent 70%);
+            animation: meshFloat1 22s ease-in-out infinite;
+        }
+
+        .hero-mesh span:nth-child(2) {
+            width: 38vw; height: 38vw; bottom: -15%; right: -5%;
+            background: radial-gradient(circle, var(--accent-gold), transparent 70%);
+            animation: meshFloat2 26s ease-in-out infinite;
+        }
+
+        .hero-mesh span:nth-child(3) {
+            width: 30vw; height: 30vw; top: 30%; left: 55%;
+            background: radial-gradient(circle, var(--ai-glow), transparent 70%);
+            opacity: 0.35;
+            animation: meshFloat3 19s ease-in-out infinite;
+        }
+
+        @keyframes meshFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(6%, 8%) scale(1.1); }
+        }
+        @keyframes meshFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-7%, -6%) scale(1.08); }
+        }
+        @keyframes meshFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-5%, 5%) scale(1.15); }
+        }
+
+        /* Canvas de nós conectados (rede neural sutil) */
+        #hero-network {
+            position: absolute; inset: 0; z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero > div { position: relative; z-index: 2; }
+
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px;
+            color: var(--accent-gold);
+            font-weight: 500;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .hero-eyebrow::before {
+            content: ""; width: 6px; height: 6px; border-radius: 50%;
+            background: var(--accent-gold);
+            box-shadow: 0 0 10px var(--accent-gold);
+            animation: pulseDot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
         }
 
         .hero h1 { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; margin-bottom: 20px; }
@@ -113,6 +224,61 @@
 
         @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
+        /* Seção AI First (elemento de assinatura) */
+        .ai-first-section { padding: 80px 10% 40px; text-align: center; }
+
+        .section-eyebrow {
+            display: inline-block;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px;
+            color: var(--terracota); font-weight: 600; margin-bottom: 18px;
+        }
+
+        .ai-first-intro h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); max-width: 800px; margin: 0 auto 20px; line-height: 1.25; }
+        .ai-first-intro p { max-width: 600px; margin: 0 auto; opacity: 0.7; font-weight: 300; }
+
+        .ai-thread-wrap { position: relative; max-width: 900px; margin: 70px auto 20px; }
+
+        .ai-thread { width: 100%; height: auto; overflow: visible; }
+
+        .ai-thread path {
+            fill: none;
+            stroke: url(#thread-gradient);
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+
+        .ai-thread-nodes {
+            display: flex; justify-content: space-between;
+            margin-top: -18px;
+        }
+
+        .ai-node {
+            display: flex; flex-direction: column; align-items: center; gap: 12px;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--text-dim); max-width: 150px;
+        }
+
+        .ai-node-dot {
+            width: 12px; height: 12px; border-radius: 50%;
+            background: var(--terracota);
+            box-shadow: 0 0 0 0 rgba(195, 91, 62, 0.5);
+            animation: nodePulse 2.5s ease-out infinite;
+        }
+
+        .ai-node:nth-child(2) .ai-node-dot { background: var(--accent-gold); animation-delay: 0.6s; box-shadow: 0 0 0 0 rgba(227, 166, 98, 0.5); }
+        .ai-node:nth-child(3) .ai-node-dot { background: var(--ai-glow); animation-delay: 1.2s; box-shadow: 0 0 0 0 rgba(143, 147, 224, 0.5); }
+
+        @keyframes nodePulse {
+            0% { box-shadow: 0 0 0 0 rgba(195, 91, 62, 0.4); }
+            70% { box-shadow: 0 0 0 14px rgba(195, 91, 62, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(195, 91, 62, 0); }
+        }
+
+        @media (max-width: 768px) {
+            .ai-thread-wrap { margin: 40px auto 10px; }
+            .ai-node { font-size: 0.65rem; max-width: 90px; }
+        }
+
         /* Seção Serviços 3 Colunas */
         .section-padding { padding: 60px 10%; }
         
@@ -124,15 +290,32 @@
         }
 
         .service-block {
+            position: relative;
             background: rgba(20, 20, 20, 0.6);
             border: 1px solid rgba(255,255,255,0.03);
             border-radius: var(--radius);
             padding: 40px;
-            transition: var(--transition);
+            transition: var(--transition), transform 0.15s ease-out;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            will-change: transform;
         }
+
+        .service-block::before {
+            content: "";
+            position: absolute; inset: 0;
+            border-radius: var(--radius);
+            background: radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), rgba(195, 91, 62, 0.15), transparent 70%);
+            opacity: 0; transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .service-block:hover::before { opacity: 1; }
+
+        .service-block > * { position: relative; z-index: 1; }
 
         .service-block:hover { border-color: var(--terracota); background: rgba(30, 30, 30, 0.8); }
 
@@ -177,7 +360,20 @@
         @keyframes rotateClock { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .step { display: none; }
-        .step.active { display: block; animation: smoothFade 0.6s forwards; }
+        .step.active { display: block; animation: stepIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+        @keyframes stepIn {
+            from { opacity: 0; transform: translateX(24px) scale(0.98); }
+            to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+
+        .quiz-dots { display: flex; justify-content: center; gap: 10px; margin-top: 35px; }
+        .quiz-dots span {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(26, 26, 26, 0.15);
+            transition: 0.3s;
+        }
+        .quiz-dots span.active { background: var(--terracota); width: 22px; border-radius: 4px; }
 
         .opt-wrap { display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
         .opt-btn {
@@ -209,6 +405,14 @@
         }
 
         .drucker-section blockquote { font-size: 2.2rem; font-style: italic; }
+
+        .drucker-section blockquote .word {
+            display: inline-block;
+            opacity: 0.15;
+            transform: translateY(6px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .drucker-section blockquote .word.visible { opacity: 1; transform: translateY(0); }
 
         /* Rodapé */
         footer {
@@ -273,10 +477,14 @@
 </head>
 <body>
 
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+
     <div class="lightbulb-scroll" id="bulb">💡</div>
 
     <nav class="nav-glass">
         <a href="#inicio">Início</a>
+        <a href="#ai-first">AI First</a>
         <a href="#oficio">O que fazemos</a>
         <a href="#match">O Match</a>
         <a href="#lab">Lab</a>
@@ -287,11 +495,14 @@
     </a>
 
     <section id="inicio" class="hero">
+        <div class="hero-mesh" aria-hidden="true"><span></span><span></span><span></span></div>
+        <canvas id="hero-network" aria-hidden="true"></canvas>
         <div data-aos="fade-up">
+            <span class="hero-eyebrow">Agência de Marketing AI First</span>
             <img src="img/logo akoma.png" alt="Akoma Lab" style="height: 60px; margin-bottom: 20px;">
             <h1>Traduzir <span>sonhos</span><br>gera valor.</h1>
             <p style="max-width: 600px; margin: 20px auto; opacity: 0.7; font-weight: 300;">
-                O elo criativo entre o seu propósito e o coração do seu cliente. 🕊️
+                O elo criativo entre o seu propósito, a inteligência artificial e o coração do seu cliente. 🕊️
             </p>
         </div>
     </section>
@@ -314,6 +525,31 @@
         </div>
     </div>
 
+    <section id="ai-first" class="ai-first-section">
+        <div class="ai-first-intro" data-aos="fade-up">
+            <span class="section-eyebrow">Por que AI First</span>
+            <h2>A inteligência artificial é o elo que conecta os três pilares da Akoma.</h2>
+            <p>Não usamos IA como atalho. Usamos como amplificador: de criatividade, de dados e de cuidado com cada cliente da sua base.</p>
+        </div>
+        <div class="ai-thread-wrap" data-aos="fade-up" data-aos-delay="150">
+            <svg class="ai-thread" id="ai-thread-svg" viewBox="0 0 1000 160" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="thread-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#c35b3e" />
+                        <stop offset="50%" stop-color="#e3a662" />
+                        <stop offset="100%" stop-color="#8f93e0" />
+                    </linearGradient>
+                </defs>
+                <path id="ai-thread-path" d="M80,80 C 260,10 340,150 500,80 S 740,10 920,80" />
+            </svg>
+            <div class="ai-thread-nodes">
+                <div class="ai-node"><span class="ai-node-dot"></span>Social e Traffic</div>
+                <div class="ai-node"><span class="ai-node-dot"></span>Strategic CRM</div>
+                <div class="ai-node"><span class="ai-node-dot"></span>Lab Training</div>
+            </div>
+        </div>
+    </section>
+
     <section id="oficio" class="section-padding">
         <h2 style="font-size: 3.5rem; text-align: center; margin-bottom: 50px;" data-aos="fade-up">Arquitetura Criativa 🌿</h2>
         
@@ -324,10 +560,10 @@
                     <p class="service-desc">Escalamos sua mensagem através de uma narrativa poderosa aliada à precisão dos dados, garantindo que sua marca seja vista por quem realmente importa.</p>
                 </div>
                 <ul class="service-bullets">
+                    <li>Criativos Gerados e Testados com IA</li>
                     <li>Gestão Criativa de Redes Sociais</li>
                     <li>Tráfego Pago de Alta Performance</li>
                     <li>Planejamento Editorial Estratégico</li>
-                    <li>Criação de Criativos de Conversão</li>
                     <li>Setup de BI e Monitoramento</li>
                     <li>Testes A e B de Narrativas</li>
                     <li>Gestão de Comunidade</li>
@@ -342,10 +578,10 @@
                     <p class="service-desc">Transformamos sua base de contatos em uma comunidade fiel. Através de automações inteligentes, cuidamos de cada etapa da jornada do cliente.</p>
                 </div>
                 <ul class="service-bullets">
+                    <li>Automações Preditivas com IA</li>
                     <li>Implantação de Ecossistema CRM</li>
                     <li>Réguas de Boas-vindas e Onboarding</li>
                     <li>Segmentação Avançada de Base</li>
-                    <li>Automações de Recuperação</li>
                     <li>Fluxos de Reengajamento Ativo</li>
                     <li>Pesquisas de Satisfação NPS</li>
                     <li>Limpeza e Enriquecimento de Dados</li>
@@ -360,9 +596,9 @@
                     <p class="service-desc">Capacitamos seu time para internalizar a cultura de growth e criatividade da Akoma, garantindo perenidade e inovação contínua.</p>
                 </div>
                 <ul class="service-bullets">
+                    <li>Treinamento de IA Aplicada</li>
                     <li>Workshops Práticos de Growth</li>
                     <li>Mentoria de Estratégia Digital</li>
-                    <li>Treinamento de IA Aplicada</li>
                     <li>Imersão em Storytelling de Marca</li>
                     <li>Estruturação de Processos Internos</li>
                     <li>Consultoria de Tech Stack</li>
@@ -403,6 +639,9 @@
                     </form>
                 </div>
             </div>
+            <div class="quiz-dots" id="quizDots">
+                <span class="active"></span><span></span><span></span><span></span>
+            </div>
         </div>
     </section>
 
@@ -426,6 +665,9 @@
                 <div class="carousel-card"><p>Landing pages com vídeos podem aumentar a conversão em 80%.</p><span class="source">Unbounce</span></div>
                 <div class="carousel-card"><p>UX bem feito pode aumentar taxas de conversão em 400%.</p><span class="source">Forrester</span></div>
                 <div class="carousel-card"><p>Marcas que humanizam o digital têm LTV 40% maior.</p><span class="source">Akoma Lab</span></div>
+                <div class="carousel-card"><p>Empresas que usam IA em marketing reduzem em até 30% o tempo de produção de campanhas.</p><span class="source">McKinsey</span></div>
+                <div class="carousel-card"><p>PMEs que adotam IA generativa relatam ganho médio de produtividade de 40% no time de marketing.</p><span class="source">Salesforce</span></div>
+                <div class="carousel-card"><p>Campanhas otimizadas por IA têm CAC até 25% menor que campanhas geridas manualmente.</p><span class="source">Boston Consulting Group</span></div>
             </div>
             <button class="nav-arrow next-arrow" onclick="scrollCarousel(1)">❯</button>
         </div>
@@ -444,17 +686,213 @@
     <script>
         AOS.init({ duration: 1200, once: true });
 
-        window.addEventListener('scroll', () => {
-            const bulb = document.getElementById('bulb');
-            const scrollPos = window.scrollY;
-            if (bulb) {
-                bulb.style.transform = `translateY(${scrollPos * 0.1}px) rotate(${scrollPos * 0.05}deg)`;
-            }
-        });
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+        /* ---------- Lâmpada + Barra de Progresso de Scroll ---------- */
+        const bulb = document.getElementById('bulb');
+        const scrollProgress = document.getElementById('scrollProgress');
+
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docHeight > 0 ? (scrollPos / docHeight) * 100 : 0;
+
+            if (scrollProgress) scrollProgress.style.width = pct + '%';
+
+            if (bulb) {
+                const glowStrength = 15 + Math.min(pct / 5, 15);
+                bulb.style.transform = `translateY(${scrollPos * 0.1}px) rotate(${scrollPos * 0.05}deg)`;
+                bulb.style.filter = `drop-shadow(0 0 ${glowStrength}px var(--terracota))`;
+            }
+        }, { passive: true });
+
+        /* ---------- Glow Ambiente seguindo o cursor ---------- */
+        const cursorGlow = document.getElementById('cursorGlow');
+        if (cursorGlow && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
+            let gx = window.innerWidth / 2, gy = window.innerHeight / 2;
+            let tx = gx, ty = gy;
+            window.addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; }, { passive: true });
+            (function animateGlow() {
+                gx += (tx - gx) * 0.08;
+                gy += (ty - gy) * 0.08;
+                cursorGlow.style.transform = `translate(${gx - 250}px, ${gy - 250}px)`;
+                requestAnimationFrame(animateGlow);
+            })();
+        } else if (cursorGlow) {
+            cursorGlow.style.display = 'none';
+        }
+
+        /* ---------- Rede de nós sutil no Hero (Canvas) ---------- */
+        const heroCanvas = document.getElementById('hero-network');
+        if (heroCanvas && !reduceMotion) {
+            const ctx = heroCanvas.getContext('2d');
+            const heroSection = document.getElementById('inicio');
+            let nodes = [];
+            const NODE_COUNT = window.innerWidth < 768 ? 18 : 38;
+
+            function resizeCanvas() {
+                heroCanvas.width = heroSection.offsetWidth;
+                heroCanvas.height = heroSection.offsetHeight;
+            }
+
+            function initNodes() {
+                nodes = Array.from({ length: NODE_COUNT }, () => ({
+                    x: Math.random() * heroCanvas.width,
+                    y: Math.random() * heroCanvas.height,
+                    vx: (Math.random() - 0.5) * 0.25,
+                    vy: (Math.random() - 0.5) * 0.25
+                }));
+            }
+
+            function drawNetwork() {
+                ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+                nodes.forEach(n => {
+                    n.x += n.vx; n.y += n.vy;
+                    if (n.x < 0 || n.x > heroCanvas.width) n.vx *= -1;
+                    if (n.y < 0 || n.y > heroCanvas.height) n.vy *= -1;
+                });
+
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const dx = nodes[i].x - nodes[j].x;
+                        const dy = nodes[i].y - nodes[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 160) {
+                            ctx.strokeStyle = `rgba(195, 91, 62, ${0.12 * (1 - dist / 160)})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(nodes[i].x, nodes[i].y);
+                            ctx.lineTo(nodes[j].x, nodes[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                nodes.forEach(n => {
+                    ctx.fillStyle = 'rgba(253, 248, 245, 0.35)';
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, 1.6, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(drawNetwork);
+            }
+
+            resizeCanvas();
+            initNodes();
+            drawNetwork();
+            window.addEventListener('resize', () => { resizeCanvas(); initNodes(); });
+        }
+
+        /* ---------- Spotlight + Tilt nos cards de serviço ---------- */
+        if (!reduceMotion && window.matchMedia('(hover: hover)').matches) {
+            document.querySelectorAll('.service-block').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mx', `${x}px`);
+                    card.style.setProperty('--my', `${y}px`);
+
+                    const rotateY = ((x / rect.width) - 0.5) * 6;
+                    const rotateX = ((y / rect.height) - 0.5) * -6;
+                    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+                });
+            });
+        }
+
+        /* ---------- Botões com atração magnética ---------- */
+        if (!reduceMotion && window.matchMedia('(hover: hover)').matches) {
+            document.querySelectorAll('.btn-equipe, .opt-btn').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    btn.style.transform = `translate(${x * 0.18}px, ${y * 0.3}px)`;
+                });
+                btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0, 0)'; });
+            });
+        }
+
+        /* ---------- Quiz "O Match" ---------- */
         function next(n) {
             document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
             document.getElementById('s' + n).classList.add('active');
+
+            document.querySelectorAll('#quizDots span').forEach((dot, i) => {
+                dot.classList.toggle('active', i === n - 1);
+            });
+        }
+
+        /* ---------- Reveal palavra por palavra (Drucker) ---------- */
+        const druckerQuote = document.querySelector('.drucker-section blockquote');
+        if (druckerQuote) {
+            const text = druckerQuote.textContent.trim();
+            druckerQuote.innerHTML = text.split(' ').map(w => `<span class="word">${w}</span>`).join(' ');
+            const words = druckerQuote.querySelectorAll('.word');
+
+            const druckerObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        words.forEach((w, i) => {
+                            w.style.transitionDelay = `${i * 35}ms`;
+                            w.classList.add('visible');
+                        });
+                        druckerObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.4 });
+            druckerObserver.observe(druckerQuote);
+        }
+
+        /* ---------- Traço animado da seção AI First ---------- */
+        const threadPath = document.getElementById('ai-thread-path');
+        if (threadPath) {
+            const length = threadPath.getTotalLength();
+            threadPath.style.strokeDasharray = length;
+            threadPath.style.strokeDashoffset = length;
+
+            const threadObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        threadPath.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.22, 1, 0.36, 1)';
+                        threadPath.style.strokeDashoffset = '0';
+                        threadObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            threadObserver.observe(threadPath);
+        }
+
+        /* ---------- Carrossel "Curiosidades do Lab" (auto-scroll contínuo) ---------- */
+        const carousel = document.getElementById('carousel');
+        if (carousel) {
+            const originalCards = Array.from(carousel.children);
+            originalCards.forEach(card => {
+                carousel.appendChild(card.cloneNode(true));
+            });
+
+            let isPaused = false;
+            let halfWidth = carousel.scrollWidth / 2;
+            window.addEventListener('resize', () => { halfWidth = carousel.scrollWidth / 2; });
+            window.addEventListener('load', () => { halfWidth = carousel.scrollWidth / 2; });
+
+            carousel.addEventListener('mouseenter', () => { isPaused = true; });
+            carousel.addEventListener('mouseleave', () => { isPaused = false; });
+
+            if (!reduceMotion) {
+                (function autoScroll() {
+                    if (!isPaused) {
+                        carousel.scrollLeft += 0.6;
+                        if (carousel.scrollLeft >= halfWidth) {
+                            carousel.scrollLeft -= halfWidth;
+                        }
+                    }
+                    requestAnimationFrame(autoScroll);
+                })();
+            }
         }
 
         function scrollCarousel(direction) {
