@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Space+Mono:wght@400;700&family=Unbounded:wght@500;700;800&display=swap');
+:root{
+  /* Akoma · Rota Choque · tokens v1.0 */
+  --cor-branco:#FFFFFF; --cor-branco-rgb:255,255,255;
+  --cor-ultramar:#2D2BFF; --cor-ultramar-rgb:45,43,255;
+  --cor-choque:#FF2E88; --cor-choque-rgb:255,46,136;
+  --cor-lavanda:#ECEBFF; --cor-lavanda-rgb:236,235,255;
+  --cor-tinta:#0E0C2E; --cor-tinta-rgb:14,12,46;
+  --cor-limao:#D4FF3A; --cor-limao-rgb:212,255,58;
+  --fonte-display:'Unbounded',system-ui,sans-serif;
+  --fonte-texto:'Manrope',system-ui,sans-serif;
+  --fonte-mono:'Space Mono',ui-monospace,monospace;
+  --tipo-display:800 120px/1.0 var(--fonte-display); --tipo-display-tracking:-0.02em;
+  --tipo-h1:800 96px/1.05 var(--fonte-display); --tipo-h1-tracking:-0.02em;
+  --tipo-h2:700 56px/1.15 var(--fonte-display); --tipo-h2-tracking:-0.01em;
+  --tipo-body:500 34px/1.45 var(--fonte-texto); --tipo-body-tracking:0;
+  --tipo-body-strong:800 34px/1.45 var(--fonte-texto); --tipo-body-strong-tracking:0;
+  --tipo-caption:400 22px/1.3 var(--fonte-mono); --tipo-caption-tracking:0.12em;
+  --espaco-0:0px;
+  --espaco-1:8px;
+  --espaco-2:16px;
+  --espaco-3:24px;
+  --espaco-4:32px;
+  --espaco-5:48px;
+  --espaco-6:64px;
+  --espaco-7:80px;
+  --espaco-8:120px;
+  --espaco-9:160px;
+  --raio-p:12px; --raio-m:24px; --raio-g:44px; --raio-pilula:999px;
+}
