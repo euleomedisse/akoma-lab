@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-labelledby="t d">
+  <title id="t">[FOTO DO LEO]</title>
+  <desc id="d">Espaço reservado para a foto de Leonardo Santos</desc>
+  <rect width="800" height="1000" fill="#ECEBFF"/>
+  <circle cx="800" cy="0" r="280" fill="#FF2E88"/>
+  <circle cx="0" cy="1000" r="220" fill="#2D2BFF"/>
+  <circle cx="640" cy="820" r="90" fill="#D4FF3A"/>
+  <g transform="translate(250,380)" fill="#0E0C2E">
+    <circle cx="150" cy="70" r="70" fill="none" stroke="#0E0C2E" stroke-width="18"/>
+    <path d="M40 250c0-70 50-110 110-110s110 40 110 110" fill="none" stroke="#0E0C2E" stroke-width="18" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,287 @@
+/* Akoma · animações Choque · só transform/opacity/clip, sem mudar layout */
+
+/* Entrada do hero */
+html.js-anim .hero-word > span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.5em);
+  animation: heroWordIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(0.12s + (var(--d, 0) * 0.09s));
+}
+.hero-word { display: inline-block; }
+.hero-title .hero-word:nth-child(1) { --d: 0; }
+.hero-title .hero-word:nth-child(2) { --d: 1; }
+.hero-title .hero-word:nth-child(3) { --d: 2; }
+.hero-title .hero-word:nth-child(4) { --d: 3; }
+.hero-title .hero-word:nth-child(5) { --d: 4; }
+.hero-title .hero-word:nth-child(6) { --d: 5; }
+
+html.js-anim .hero .tag,
+html.js-anim .hero-sub,
+html.js-anim .hero-actions,
+html.js-anim .hero-micro,
+html.js-anim .hero-apoio {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+html.js-anim .hero .tag { animation-delay: 0.06s; }
+html.js-anim .hero-sub { animation-delay: 0.68s; }
+html.js-anim .hero-actions { animation-delay: 0.84s; }
+html.js-anim .hero-micro { animation-delay: 0.98s; }
+html.js-anim .hero-apoio { animation-delay: 1.1s; }
+
+@keyframes heroWordIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Formas: entrada + flutuação, parallax via --py */
+.shape { --py: 0px; will-change: transform; }
+.shape-choque {
+  animation: shapeIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both,
+             floatChoque 16s 0.9s ease-in-out infinite;
+}
+.shape-limao {
+  animation: shapeIn 1s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both,
+             floatLimao 9s 1.15s ease-in-out infinite;
+}
+.shape-ultramar {
+  animation: shapeIn 1s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both,
+             floatUltramar 12s 1.2s ease-in-out infinite;
+}
+@keyframes shapeIn {
+  from { opacity: 0; transform: translate3d(0, var(--py, 0px), 0) scale(0.86); }
+  to { opacity: 1; transform: translate3d(0, var(--py, 0px), 0) scale(1); }
+}
+@keyframes floatChoque {
+  0%, 100% { transform: translate3d(0, var(--py, 0px), 0) scale(1); }
+  50% { transform: translate3d(-10px, calc(var(--py, 0px) + 8px), 0) scale(1.03); }
+}
+@keyframes floatLimao {
+  0%, 100% { transform: translate3d(0, var(--py, 0px), 0) rotate(0deg); }
+  50% { transform: translate3d(10px, calc(var(--py, 0px) - 14px), 0) rotate(8deg); }
+}
+@keyframes floatUltramar {
+  0%, 100% { transform: translate3d(0, var(--py, 0px), 0); }
+  50% { transform: translate3d(16px, calc(var(--py, 0px) - 6px), 0); }
+}
+
+/* Faixa de pilares (texto já existente nos cards) */
+.marquee-pilares {
+  overflow: hidden;
+  background: var(--cor-tinta);
+  color: var(--cor-branco);
+  height: 48px;
+  border-top: 3px solid var(--cor-tinta);
+}
+.marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  height: 48px;
+  font-family: var(--fonte-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  animation: marquee 32s linear infinite;
+}
+.marquee-track span { padding: 0 4px; white-space: nowrap; }
+.marquee-track i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin: 0 22px;
+  border-radius: 50%;
+  background: var(--cor-choque);
+  flex: none;
+}
+.marquee-track i:nth-child(4n) { background: var(--cor-limao); }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Header encolhe ao rolar */
+.site-header .brand-bar,
+.site-header .header-inner,
+.site-header .logo img {
+  transition: height 0.28s ease, width 0.28s ease;
+}
+.site-header.is-scrolled .brand-bar { height: 5px; }
+.site-header.is-scrolled .header-inner { height: 64px; }
+.site-header.is-scrolled .logo img { width: min(180px, 48vw); }
+.site-header.menu-open.is-scrolled .brand-bar { height: 8px; }
+.site-header.menu-open.is-scrolled .header-inner { height: 80px; }
+@media (min-width: 1100px) {
+  .site-header.is-scrolled .header-inner { height: 72px; }
+  .site-header.is-scrolled .logo img { width: 186px; }
+}
+
+/* Sublinhado animado no menu */
+.nav-list a {
+  background-image: linear-gradient(var(--cor-choque), var(--cor-choque));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 3px;
+  transition: background-size 0.28s ease, color 0.2s ease;
+  padding-bottom: 2px;
+}
+.nav-list a:hover,
+.nav-list a:focus-visible {
+  background-size: 100% 3px;
+  color: var(--cor-tinta);
+}
+
+/* Botões: preenchimento e seta */
+.btn-limao,
+.btn-tinta,
+.btn-contorno {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.btn-limao::before,
+.btn-tinta::before,
+.btn-contorno::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn-limao::before { background: var(--cor-choque); }
+.btn-tinta::before { background: var(--cor-ultramar); }
+.btn-contorno::before { background: var(--cor-limao); }
+.btn-limao:hover::before,
+.btn-limao:focus-visible::before,
+.btn-tinta:hover::before,
+.btn-tinta:focus-visible::before,
+.btn-contorno:hover::before,
+.btn-contorno:focus-visible::before {
+  transform: scaleX(1);
+}
+.btn-texto [aria-hidden],
+.proximo a [aria-hidden],
+.link-acao [aria-hidden] {
+  display: inline-block;
+  transition: transform 0.22s ease;
+}
+.btn-texto:hover [aria-hidden],
+.btn-texto:focus-visible [aria-hidden],
+.proximo a:hover [aria-hidden],
+.link-acao:hover [aria-hidden] {
+  transform: translateX(5px);
+}
+
+/* Cards: elevação, leve inclinação, sombra bloco */
+@media (hover: hover) and (pointer: fine) {
+  .dor,
+  .pilar,
+  .parte,
+  .dado,
+  .ebook,
+  .ia-col,
+  .faq-item {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  }
+  .dor:hover,
+  .pilar:hover,
+  .parte:hover,
+  .dado:hover,
+  .ebook:hover,
+  .ia-col:hover {
+    transform: translateY(-8px) rotate(-0.35deg);
+    box-shadow: 8px 8px 0 var(--cor-tinta);
+  }
+  .pilar-choque:hover,
+  .dor-choque:hover {
+    transform: translateY(-8px) rotate(0.35deg);
+  }
+  .faq-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 4px 4px 0 var(--cor-tinta);
+  }
+}
+
+/* Reveals no scroll */
+html.js-anim .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+html.js-anim .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+html.js-anim .reveal-clip {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+html.js-anim .reveal-clip.is-in {
+  clip-path: inset(0 0 0 0);
+}
+html.js-anim .reveal-left {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+html.js-anim .reveal-left.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Números já existentes: entrada em clip */
+html.js-anim .dado-num {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+}
+html.js-anim .is-in .dado-num,
+html.js-anim .dado-num.is-in {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  html.js-anim .hero-word > span,
+  html.js-anim .hero .tag,
+  html.js-anim .hero-sub,
+  html.js-anim .hero-actions,
+  html.js-anim .hero-micro,
+  html.js-anim .hero-apoio,
+  html.js-anim .reveal,
+  html.js-anim .reveal-clip,
+  html.js-anim .reveal-left,
+  html.js-anim .dado-num,
+  .shape-choque,
+  .shape-limao,
+  .shape-ultramar,
+  .marquee-track,
+  .btn-limao::before,
+  .btn-tinta::before,
+  .btn-contorno::before {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+  .site-header .brand-bar,
+  .site-header .header-inner,
+  .site-header .logo img {
+    transition: none !important;
+  }
+}

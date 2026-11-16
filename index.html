@@ -1,912 +1,555 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akoma Lab | Marketing</title>
-    <link rel="icon" type="image/png" href="img/favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0a0a0a;
-            --card-bg: #141414;
-            --terracota: #c35b3e;
-            --accent-gold: #e3a662;
-            --ai-glow: #8f93e0;
-            --text-main: #fdf8f5;
-            --text-dim: #808080;
-            --radius: 40px;
-            --transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-
-        /* Fundo com Rabiscos de Lápis */
-        body {
-            background-color: var(--bg);
-            background-image: url("data:image/svg+xml,%3Csvg width='500' height='500' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 50 Q 150 100 50 200 T 250 300' stroke='rgba(255,255,255,0.03)' fill='transparent' stroke-width='1'/%3E%3Cpath d='M400 100 Q 450 250 300 400' stroke='rgba(195,91,62,0.05)' fill='transparent' stroke-width='1'/%3E%3Cpath d='M100 450 C 150 400 250 450 300 350' stroke='rgba(255,255,255,0.02)' fill='transparent' stroke-width='1'/%3E%3C/svg%3E");
-            color: var(--text-main);
-            font-family: 'Roboto', sans-serif;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 400; }
-
-        /* Menu */
-        .nav-glass {
-            position: fixed;
-            top: 30px; left: 50%;
-            transform: translateX(-50%);
-            background: rgba(20, 20, 20, 0.85);
-            backdrop-filter: blur(20px);
-            padding: 12px 40px;
-            border-radius: 100px;
-            display: flex; gap: 30px;
-            z-index: 1000;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .nav-glass a {
-            text-decoration: none; color: var(--text-main);
-            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
-            transition: var(--transition);
-        }
-
-        .nav-glass a:hover { color: var(--terracota); }
-
-        /* Barra de Progresso de Scroll */
-        .scroll-progress {
-            position: fixed; top: 0; left: 0;
-            height: 2px; width: 0%;
-            background: linear-gradient(90deg, var(--terracota), var(--accent-gold));
-            z-index: 1100;
-            transition: width 0.1s linear;
-        }
-
-        /* Glow Ambiente que segue o cursor */
-        .cursor-glow {
-            position: fixed; top: 0; left: 0;
-            width: 500px; height: 500px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(195, 91, 62, 0.12), transparent 70%);
-            pointer-events: none;
-            z-index: 1;
-            transform: translate(-50%, -50%);
-            will-change: transform;
-            mix-blend-mode: screen;
-        }
-
-        /* Lâmpada Flutuante */
-        .lightbulb-scroll {
-            position: fixed;
-            right: 50px;
-            top: 50%;
-            font-size: 2.5rem;
-            z-index: 500;
-            filter: drop-shadow(0 0 15px var(--terracota));
-            transition: transform 0.1s linear;
-            pointer-events: none;
-        }
-
-        /* Hero */
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 0 10%;
-            background: linear-gradient(to bottom, rgba(10,10,10,0.4), var(--bg)), 
-                        url('img/hero-bg.jpg') center/cover;
-            overflow: hidden;
-        }
-
-        /* Mesh gradient vivo, tons terracota + dourado */
-        .hero-mesh {
-            position: absolute; inset: 0; z-index: 0;
-            opacity: 0.55;
-            filter: blur(60px);
-            pointer-events: none;
-        }
-
-        .hero-mesh span {
-            position: absolute;
-            border-radius: 50%;
-            mix-blend-mode: screen;
-            will-change: transform;
-        }
-
-        .hero-mesh span:nth-child(1) {
-            width: 45vw; height: 45vw; top: -10%; left: -5%;
-            background: radial-gradient(circle, var(--terracota), transparent 70%);
-            animation: meshFloat1 22s ease-in-out infinite;
-        }
-
-        .hero-mesh span:nth-child(2) {
-            width: 38vw; height: 38vw; bottom: -15%; right: -5%;
-            background: radial-gradient(circle, var(--accent-gold), transparent 70%);
-            animation: meshFloat2 26s ease-in-out infinite;
-        }
-
-        .hero-mesh span:nth-child(3) {
-            width: 30vw; height: 30vw; top: 30%; left: 55%;
-            background: radial-gradient(circle, var(--ai-glow), transparent 70%);
-            opacity: 0.35;
-            animation: meshFloat3 19s ease-in-out infinite;
-        }
-
-        @keyframes meshFloat1 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(6%, 8%) scale(1.1); }
-        }
-        @keyframes meshFloat2 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-7%, -6%) scale(1.08); }
-        }
-        @keyframes meshFloat3 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-5%, 5%) scale(1.15); }
-        }
-
-        /* Canvas de nós conectados (rede neural sutil) */
-        #hero-network {
-            position: absolute; inset: 0; z-index: 1;
-            pointer-events: none;
-        }
-
-        .hero > div { position: relative; z-index: 2; }
-
-        .hero-eyebrow {
-            display: inline-flex; align-items: center; gap: 10px;
-            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px;
-            color: var(--accent-gold);
-            font-weight: 500;
-            margin-bottom: 25px;
-            opacity: 0.9;
-        }
-
-        .hero-eyebrow::before {
-            content: ""; width: 6px; height: 6px; border-radius: 50%;
-            background: var(--accent-gold);
-            box-shadow: 0 0 10px var(--accent-gold);
-            animation: pulseDot 2s ease-in-out infinite;
-        }
-
-        @keyframes pulseDot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.7); }
-        }
-
-        .hero h1 { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; margin-bottom: 20px; }
-        .hero h1 span { color: var(--terracota); font-style: italic; }
-
-        .hero-logo {
-            display: block;
-            height: 60px;
-            width: auto;
-            margin: 0 auto 20px auto;
-        }
-
-        /* Barra de Marcas Refinada */
-        .brands-section {
-            background: #ffffff; /* Fundo branco solicitado */
-            padding: 25px 0; /* Espaçamento vertical sutil e elegante solicitado */
-            border-top: 1px solid #eeeeee;
-            border-bottom: 1px solid #eeeeee;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .brands-intro {
-            font-size: 0.7rem;
-            color: #888888; /* Letras pequenas cinza */
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        /* Classe para quebra de texto apenas no mobile */
-        .brands-break-mobile { display: none; }
-
-        .marquee-track {
-            display: flex; gap: 80px; align-items: center;
-            animation: scroll 35s linear infinite;
-            width: max-content;
-        }
-
-        .marquee-track img {
-            height: 35px; /* Altura sutil */
-            opacity: 0.7;
-            transition: 0.3s;
-        }
-
-        .marquee-track img:hover { opacity: 1; transform: scale(1.05); }
-
-        @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-        /* Seção AI First (elemento de assinatura) */
-        .ai-first-section { padding: 80px 10% 40px; text-align: center; }
-
-        .section-eyebrow {
-            display: inline-block;
-            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px;
-            color: var(--terracota); font-weight: 600; margin-bottom: 18px;
-        }
-
-        .ai-first-intro h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); max-width: 800px; margin: 0 auto 20px; line-height: 1.25; }
-        .ai-first-intro p { max-width: 600px; margin: 0 auto; opacity: 0.7; font-weight: 300; }
-
-        .ai-thread-wrap { position: relative; max-width: 900px; margin: 70px auto 20px; }
-
-        .ai-thread { width: 100%; height: auto; overflow: visible; }
-
-        .ai-thread path {
-            fill: none;
-            stroke: url(#thread-gradient);
-            stroke-width: 2;
-            stroke-linecap: round;
-        }
-
-        .ai-thread-nodes {
-            display: flex; justify-content: space-between;
-            margin-top: -18px;
-        }
-
-        .ai-node {
-            display: flex; flex-direction: column; align-items: center; gap: 12px;
-            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px;
-            color: var(--text-dim); max-width: 150px;
-        }
-
-        .ai-node-dot {
-            width: 12px; height: 12px; border-radius: 50%;
-            background: var(--terracota);
-            box-shadow: 0 0 0 0 rgba(195, 91, 62, 0.5);
-            animation: nodePulse 2.5s ease-out infinite;
-        }
-
-        .ai-node:nth-child(2) .ai-node-dot { background: var(--accent-gold); animation-delay: 0.6s; box-shadow: 0 0 0 0 rgba(227, 166, 98, 0.5); }
-        .ai-node:nth-child(3) .ai-node-dot { background: var(--ai-glow); animation-delay: 1.2s; box-shadow: 0 0 0 0 rgba(143, 147, 224, 0.5); }
-
-        @keyframes nodePulse {
-            0% { box-shadow: 0 0 0 0 rgba(195, 91, 62, 0.4); }
-            70% { box-shadow: 0 0 0 14px rgba(195, 91, 62, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(195, 91, 62, 0); }
-        }
-
-        @media (max-width: 768px) {
-            .ai-thread-wrap { margin: 40px auto 10px; }
-            .ai-node { font-size: 0.65rem; max-width: 90px; }
-        }
-
-        /* Seção Serviços 3 Colunas */
-        .section-padding { padding: 60px 10%; }
-        
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .service-block {
-            position: relative;
-            background: rgba(20, 20, 20, 0.6);
-            border: 1px solid rgba(255,255,255,0.03);
-            border-radius: var(--radius);
-            padding: 40px;
-            transition: var(--transition), transform 0.15s ease-out;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
-            transform-style: preserve-3d;
-            will-change: transform;
-        }
-
-        .service-block::before {
-            content: "";
-            position: absolute; inset: 0;
-            border-radius: var(--radius);
-            background: radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), rgba(195, 91, 62, 0.15), transparent 70%);
-            opacity: 0; transition: opacity 0.4s ease;
-            pointer-events: none;
-        }
-
-        .service-block:hover::before { opacity: 1; }
-
-        .service-block > * { position: relative; z-index: 1; }
-
-        .service-block:hover { border-color: var(--terracota); background: rgba(30, 30, 30, 0.8); }
-
-        .service-header h3 { font-size: 2.2rem; color: var(--terracota); margin-bottom: 15px; }
-        .service-desc { font-size: 1rem; opacity: 0.8; margin-bottom: 25px; min-height: 100px; }
-
-        .service-bullets { margin-bottom: 30px; padding: 0; }
-        .service-bullets li { list-style: none; display: flex; align-items: center; font-size: 0.85rem; opacity: 0.6; margin-bottom: 10px; }
-        .service-bullets li::before { content: "→"; color: var(--terracota); margin-right: 10px; }
-
-        .btn-equipe {
-            display: inline-block; padding: 15px 35px;
-            background: var(--terracota); color: white;
-            border-radius: 100px; text-decoration: none;
-            font-weight: 600; text-transform: uppercase; font-size: 0.75rem;
-            transition: 0.3s; text-align: center;
-        }
-
-        /* Assessment Humanizado (Fundo Branco) */
-        .assessment-section { padding: 40px 10%; }
-        .assessment-wrap {
-            background: #ffffff; /* Fundo branco solicitado */
-            color: #1a1a1a; /* Texto escuro solicitado */
-            border-radius: var(--radius); padding: 50px 5%;
-            text-align: center; border: 1px solid rgba(195, 91, 62, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Sombra sutil para destacar */
-        }
-
-        /* Ajuste de cores internas do assessment */
-        .assessment-wrap h2 { color: #1a1a1a; }
-        .assessment-wrap p { color: rgba(26, 26, 26, 0.8); font-weight: 300;}
-        
-        .capture-form label { color: #1a1a1a; }
-        .capture-form input {
-            color: #1a1a1a;
-            background: rgba(0, 0, 0, 0.03);
-            border: 1px solid #eeeeee;
-        }
-        .capture-form input::placeholder { color: rgba(26, 26, 26, 0.5); }
-
-        .clock-visual { font-size: 3rem; margin-bottom: 20px; animation: rotateClock 10s linear infinite; display: inline-block; }
-        @keyframes rotateClock { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .step { display: none; }
-        .step.active { display: block; animation: stepIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-
-        @keyframes stepIn {
-            from { opacity: 0; transform: translateX(24px) scale(0.98); }
-            to { opacity: 1; transform: translateX(0) scale(1); }
-        }
-
-        .quiz-dots { display: flex; justify-content: center; gap: 10px; margin-top: 35px; }
-        .quiz-dots span {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: rgba(26, 26, 26, 0.15);
-            transition: 0.3s;
-        }
-        .quiz-dots span.active { background: var(--terracota); width: 22px; border-radius: 4px; }
-
-        .opt-wrap { display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
-        .opt-btn {
-            background: transparent; border: 1px solid var(--terracota);
-            color: var(--terracota); padding: 15px 35px;
-            border-radius: 100px; cursor: pointer; transition: 0.3s;
-        }
-        .opt-btn:hover { background: var(--terracota); color: white; }
-
-        /* Carrossel */
-        .carousel-wrapper { position: relative; width: 100%; display: flex; align-items: center; }
-        .carousel-container { display: flex; gap: 20px; overflow-x: hidden; padding: 40px 0; width: 100%; }
-        .carousel-card { flex: 0 0 320px; background: #181818; padding: 40px; border-radius: var(--radius); border-left: 2px solid var(--terracota); }
-
-        .nav-arrow {
-            background: var(--terracota); border: none; color: white;
-            width: 45px; height: 45px; border-radius: 50%;
-            cursor: pointer; position: absolute; z-index: 10;
-        }
-        .prev-arrow { left: -20px; }
-        .next-arrow { right: -20px; }
-
-        /* Drucker Section */
-        .drucker-section {
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
-                        url('img/drucker-bg.jpg') center/cover fixed;
-            padding: 120px 15%; text-align: center; border-radius: var(--radius);
-            margin: 60px 10%;
-        }
-
-        .drucker-section blockquote { font-size: 2.2rem; font-style: italic; }
-
-        .drucker-section blockquote .word {
-            display: inline-block;
-            opacity: 0.15;
-            transform: translateY(6px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        .drucker-section blockquote .word.visible { opacity: 1; transform: translateY(0); }
-
-        /* Rodapé */
-        footer {
-            padding: 80px 10% 40px;
-            background: #000;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            text-align: center;
-        }
-
-        .social-links { display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; }
-        .social-links a {
-            color: var(--text-dim); text-decoration: none;
-            font-size: 0.8rem; letter-spacing: 3px; font-weight: 700; transition: 0.3s;
-        }
-        .social-links a:hover { color: var(--terracota); }
-
-        .contact-email { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 20px; display: block; text-decoration: none;}
-
-        /* WhatsApp */
-        .wa-btn { position: fixed; bottom: 40px; right: 40px; z-index: 2000; transition: 0.3s; }
-        .wa-btn img { width: 65px; height: 65px; }
-
-        /* --- MELHORIAS MOBILE --- */
-        @media (max-width: 768px) {
-            /* Menu Mobile Centralizado e Mais Transparente */
-            .nav-glass { 
-                width: 90%; 
-                gap: 10px; 
-                font-size: 0.65rem; 
-                top: 20px;
-                left: 50%; 
-                transform: translateX(-50%); /* Centralização garantida */
-                background: rgba(20, 20, 20, 0.6); /* Mais transparente solicitado */
-                backdrop-filter: blur(10px); /* Menos blur para maior transparência */
-                justify-content: center;
-                padding: 12px 20px;
-            }
-            .nav-glass a { letter-spacing: 1px; }
-
-            .hero h1 { font-size: 3rem; }
-            .hero { padding: 0 5%; }
-            .lightbulb-scroll { display: none; } /* Esconde lâmpada no mobile */
-
-            /* Ajuste da Frase de Peter Drucker no Mobile */
-            .drucker-section { 
-                padding: 80px 5%; 
-                margin: 40px 5%; 
-                background-attachment: scroll; /* Melhora performance mobile */
-            }
-            .drucker-section blockquote { 
-                font-size: 1.4rem; /* Tamanho mais legível e ajustado */
-                line-height: 1.5;
-            }
-            
-            /* Ajuste de Texto de Marcas Mobile solicitados */
-            .brands-break-mobile { display: block; } /* Ativa quebra de texto mobile */
-            .brands-section { padding: 25px 0; }
-            .marquee-track { gap: 40px; }
-            .marquee-track img { height: 28px; }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Akoma | Marketing 360° com IA pra PMEs e autônomos</title>
+  <meta name="description" content="Social, tráfego, CRM, automação e inbound num sistema só. IA em cada etapa e gente decidindo cada passo. Agende seu Diagnóstico Akoma gratuito.">
+  <link rel="canonical" href="https://souakoma.com.br/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Akoma | Marketing 360° com IA pra PMEs e autônomos">
+  <meta property="og:description" content="Social, tráfego, CRM, automação e inbound num sistema só. IA em cada etapa e gente decidindo cada passo. Agende seu Diagnóstico Akoma gratuito.">
+  <meta property="og:url" content="https://souakoma.com.br/">
+  <meta property="og:image" content="https://souakoma.com.br/assets/img/og-share.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Akoma | Marketing 360° com IA pra PMEs e autônomos">
+  <meta name="twitter:description" content="Social, tráfego, CRM, automação e inbound num sistema só. IA em cada etapa e gente decidindo cada passo. Agende seu Diagnóstico Akoma gratuito.">
+  <meta name="twitter:image" content="https://souakoma.com.br/assets/img/og-share.png">
+  <link rel="icon" href="assets/img/monograma-ultramar.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&amp;family=Space+Mono:wght@400;700&amp;family=Unbounded:wght@500;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>document.documentElement.classList.add("js-anim");</script>
+  <link rel="stylesheet" href="assets/css/animacoes.css">
 </head>
 <body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
-    <div class="scroll-progress" id="scrollProgress"></div>
-    <div class="cursor-glow" id="cursorGlow"></div>
+  <header class="site-header" id="topo">
+    <div class="brand-bar" aria-hidden="true"><span></span></div>
+    <div class="header-inner wrap">
+      <a class="logo" href="#inicio">
+        <picture>
+          <source media="(max-width: 520px)" srcset="assets/img/wordmark-akoma.svg">
+          <img src="assets/img/wordmark-tinta.svg" width="300" height="28" alt="Akoma Lab &amp; Marketing">
+        </picture>
+      </a>
+      <nav class="nav" id="menu" aria-label="Seções do site">
+        <ul class="nav-list">
+          <li><a href="#ai-first">AI First</a></li>
+          <li><a href="#oficio">Serviços</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#ebooks">E-books</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+        <a class="btn btn-limao btn-header" href="#diagnostico">Diagnóstico grátis</a>
+      </nav>
+      <button class="menu-toggle" type="button" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
 
-    <div class="lightbulb-scroll" id="bulb">💡</div>
-
-    <nav class="nav-glass">
-        <a href="#inicio">Início</a>
-        <a href="#ai-first">AI First</a>
-        <a href="#oficio">O que fazemos</a>
-        <a href="#match">O Match</a>
-        <a href="#lab">Lab</a>
-    </nav>
-
-    <a href="https://wa.me/5521999999999" class="wa-btn" target="_blank">
-        <img src="img/whatsapp-icon.png" alt="WhatsApp">
-    </a>
-
-    <section id="inicio" class="hero">
-        <div class="hero-mesh" aria-hidden="true"><span></span><span></span><span></span></div>
-        <canvas id="hero-network" aria-hidden="true"></canvas>
-        <div data-aos="fade-up">
-            <span class="hero-eyebrow">Agência de Marketing AI First</span>
-            <img src="https://souakoma.com.br/img/logo%20akoma.png" alt="Akoma Lab" class="hero-logo">
-            <h1>Traduzir <span>sonhos</span><br>gera valor.</h1>
-            <p style="max-width: 600px; margin: 20px auto; opacity: 0.7; font-weight: 300;">
-                O elo criativo entre o seu propósito, a inteligência artificial e o coração do seu cliente. 🕊️
-            </p>
+  <main id="conteudo">
+    <section class="hero" id="inicio" aria-labelledby="hero-titulo">
+      <div class="hero-shapes" aria-hidden="true">
+        <span class="shape shape-choque"></span>
+        <span class="shape shape-limao"></span>
+        <span class="shape shape-ultramar"></span>
+      </div>
+      <div class="wrap hero-inner">
+        <p class="tag">Agência de marketing 360° · AI First</p>
+        <h1 id="hero-titulo" class="hero-title"><span class="hero-word"><span>A IA</span></span> <span class="hero-word"><span><span class="word-ultramar">acelera</span>.</span></span> <span class="hero-word"><span>Você</span></span> <span class="hero-word"><span><span class="word-choque">decide</span>.</span></span></h1>
+        <p class="hero-sub">Marketing 360° pra donos de PMEs e profissionais autônomos do Brasil todo. Social, tráfego, CRM, automação e inbound num sistema só, com IA em cada etapa e gente decidindo cada passo.</p>
+        <div class="hero-actions">
+          <a class="btn btn-limao" href="#diagnostico">Quero meu diagnóstico grátis</a>
+          <a class="btn btn-texto" href="#oficio">Ver os serviços <span aria-hidden="true">→</span></a>
         </div>
+        <p class="hero-micro">30 minutos · online · sem custo · 3 vagas por semana</p>
+        <p class="hero-apoio">Atendimento 100% remoto · opção presencial em São Paulo e no Rio de Janeiro</p>
+      </div>
     </section>
 
-    <div class="brands-section">
-        <div class="brands-intro">Nossos profissionais já passaram<br class="brands-break-mobile"> por essas empresas.</div>
-        <div class="marquee-track">
-            <img src="img/logo-sebrae.png" alt="Sebrae">
-            <img src="img/logo-boticario.png" alt="O Boticário">
-            <img src="img/logo-willbank-cliente.webp" alt="will bank">
-            <img src="img/logo-k21-cliente.png" alt="K21 Global">
-            <img src="img/logo-grupolis-cliente.jpg" alt="Grupolis">
-            <img src="img/logo-comprev.jpg" alt="Comprev">
-            <img src="img/logo-sebrae.png" alt="Sebrae">
-            <img src="img/logo-boticario.png" alt="O Boticário">
-            <img src="img/logo-willbank-cliente.webp" alt="will bank">
-            <img src="img/logo-k21-cliente.png" alt="K21 Global">
-            <img src="img/logo-grupolis-cliente.jpg" alt="Grupolis">
-            <img src="img/logo-comprev.jpg" alt="Comprev">
-        </div>
+    <div class="marquee-pilares" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Automação com IA</span><i></i><span>Social</span><i></i><span>Tráfego</span><i></i><span>CRM Estratégico</span><i></i><span>Inbound</span><i></i><span>Lab Training</span><i></i>
+        <span>Automação com IA</span><i></i><span>Social</span><i></i><span>Tráfego</span><i></i><span>CRM Estratégico</span><i></i><span>Inbound</span><i></i><span>Lab Training</span><i></i>
+      </div>
     </div>
 
-    <section id="ai-first" class="ai-first-section">
-        <div class="ai-first-intro" data-aos="fade-up">
-            <span class="section-eyebrow">Por que AI First</span>
-            <h2>A inteligência artificial é o elo que conecta os três pilares da Akoma.</h2>
-            <p>Não usamos IA como atalho. Usamos como amplificador: de criatividade, de dados e de cuidado com cada cliente da sua base.</p>
+    <section class="problema" id="problema" aria-labelledby="problema-titulo">
+      <div class="wrap">
+        <p class="tag">O problema</p>
+        <h2 id="problema-titulo">Não é falta de vontade. É falta de sistema.</h2>
+        <div class="problema-texto">
+          <p>Você posta quando dá. Responde quando lembra. Anuncia sem saber direito pra quem.</p>
+          <p>O post fica de um lado, o anúncio do outro, os contatos espalhados entre direct, WhatsApp e planilha. Ninguém olha tudo junto.</p>
+          <p>O resultado é conhecido: muito esforço, pouca clareza do que funciona e cliente que some sem você perceber.</p>
         </div>
-        <div class="ai-thread-wrap" data-aos="fade-up" data-aos-delay="150">
-            <svg class="ai-thread" id="ai-thread-svg" viewBox="0 0 1000 160" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="thread-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#c35b3e" />
-                        <stop offset="50%" stop-color="#e3a662" />
-                        <stop offset="100%" stop-color="#8f93e0" />
-                    </linearGradient>
-                </defs>
-                <path id="ai-thread-path" d="M80,80 C 260,10 340,150 500,80 S 740,10 920,80" />
-            </svg>
-            <div class="ai-thread-nodes">
-                <div class="ai-node"><span class="ai-node-dot"></span>Social e Traffic</div>
-                <div class="ai-node"><span class="ai-node-dot"></span>Strategic CRM</div>
-                <div class="ai-node"><span class="ai-node-dot"></span>Lab Training</div>
-            </div>
-        </div>
+        <ul class="dores">
+          <li class="dor dor-ultramar">
+            <h3>Postar bonito não é marketing.</h3>
+            <p>Feed lindo sem estratégia é vitrine sem porta.</p>
+          </li>
+          <li class="dor dor-choque">
+            <h3>Lead esperando é lead esfriando.</h3>
+            <p>Quem pediu orçamento ontem já pode estar falando com outra empresa hoje.</p>
+          </li>
+          <li class="dor dor-tinta">
+            <h3>Seu cliente não sumiu.</h3>
+            <p>Você perdeu ele de vista. E trazer um novo custa bem mais caro.</p>
+          </li>
+        </ul>
+        <ul class="dados">
+          <li class="dado">
+            <p class="dado-num">5 a 25x.</p>
+            <p>Dependendo do estudo e do setor, conquistar um cliente novo custa de 5 a 25 vezes mais do que manter um que você já tem.</p>
+            <p class="dado-fonte">Fonte: Amy Gallo, "The Value of Keeping the Right Customers", Harvard Business Review, 29/10/2014. <a href="https://hbr.org/2014/10/the-value-of-keeping-the-right-customers">hbr.org/2014/10/the-value-of-keeping-the-right-customers</a></p>
+          </li>
+          <li class="dado">
+            <p class="dado-num">Quase 7x.</p>
+            <p>Num estudo com 1,25 milhão de leads de 42 empresas dos EUA, quem tentou contato em até 1 hora teve quase 7 vezes mais chance de chegar a uma conversa com quem decide do que quem tentou uma hora depois.</p>
+            <p class="dado-fonte">Fonte: Oldroyd, McElheran e Elkington, "The Short Life of Online Sales Leads", Harvard Business Review, março de 2011. Dados dos EUA. <a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads">hbr.org/2011/03/the-short-life-of-online-sales-leads</a></p>
+          </li>
+        </ul>
+        <p class="fecho">A boa notícia: dá pra organizar. E não precisa ser complicado.</p>
+        <p class="proximo"><a href="#ai-first">Ver como <span aria-hidden="true">→</span></a></p>
+      </div>
     </section>
 
-    <section id="oficio" class="section-padding">
-        <h2 style="font-size: 3.5rem; text-align: center; margin-bottom: 50px;" data-aos="fade-up">Arquitetura Criativa 🌿</h2>
-        
-        <div class="service-grid">
-            <div class="service-block" data-aos="fade-up">
-                <div class="service-header">
-                    <h3>Social e Traffic 📣</h3>
-                    <p class="service-desc">Escalamos sua mensagem através de uma narrativa poderosa aliada à precisão dos dados, garantindo que sua marca seja vista por quem realmente importa.</p>
-                </div>
-                <ul class="service-bullets">
-                    <li>Criativos Gerados e Testados com IA</li>
-                    <li>Gestão Criativa de Redes Sociais</li>
-                    <li>Tráfego Pago de Alta Performance</li>
-                    <li>Planejamento Editorial Estratégico</li>
-                    <li>Setup de BI e Monitoramento</li>
-                    <li>Testes A e B de Narrativas</li>
-                    <li>Gestão de Comunidade</li>
-                    <li>Relatórios de Inteligência de Dados</li>
-                </ul>
-                <a href="https://wa.me/5521999999999" class="btn-equipe">Fale com nossa equipe</a>
-            </div>
-
-            <div class="service-block" data-aos="fade-up" data-aos-delay="200">
-                <div class="service-header">
-                    <h3>Strategic CRM 🤝</h3>
-                    <p class="service-desc">Transformamos sua base de contatos em uma comunidade fiel. Através de automações inteligentes, cuidamos de cada etapa da jornada do cliente.</p>
-                </div>
-                <ul class="service-bullets">
-                    <li>Automações Preditivas com IA</li>
-                    <li>Implantação de Ecossistema CRM</li>
-                    <li>Réguas de Boas-vindas e Onboarding</li>
-                    <li>Segmentação Avançada de Base</li>
-                    <li>Fluxos de Reengajamento Ativo</li>
-                    <li>Pesquisas de Satisfação NPS</li>
-                    <li>Limpeza e Enriquecimento de Dados</li>
-                    <li>Gestão de Retenção e Churn</li>
-                </ul>
-                <a href="https://wa.me/5521999999999" class="btn-equipe">Fale com nossa equipe</a>
-            </div>
-
-            <div class="service-block" data-aos="fade-up" data-aos-delay="400">
-                <div class="service-header">
-                    <h3>Lab Training 🎓</h3>
-                    <p class="service-desc">Capacitamos seu time para internalizar a cultura de growth e criatividade da Akoma, garantindo perenidade e inovação contínua.</p>
-                </div>
-                <ul class="service-bullets">
-                    <li>Treinamento de IA Aplicada</li>
-                    <li>Workshops Práticos de Growth</li>
-                    <li>Mentoria de Estratégia Digital</li>
-                    <li>Imersão em Storytelling de Marca</li>
-                    <li>Estruturação de Processos Internos</li>
-                    <li>Consultoria de Tech Stack</li>
-                    <li>Workshop de Criatividade Operacional</li>
-                    <li>Guia de Experiência do Cliente</li>
-                </ul>
-                <a href="https://wa.me/5521999999999" class="btn-equipe">Fale com nossa equipe</a>
-            </div>
+    <section class="ai-first" id="ai-first" aria-labelledby="ai-titulo">
+      <div class="wrap">
+        <p class="tag">360° AI First</p>
+        <h2 id="ai-titulo">Seu marketing inteiro, conectado e funcionando.</h2>
+        <p class="lead">Parece nome difícil. É simples. Em três partes:</p>
+        <ul class="partes">
+          <li class="parte">
+            <h3>360°</h3>
+            <p>A Akoma cuida do caminho inteiro do seu cliente. Da primeira vez que ele vê sua marca no Instagram ou num anúncio, passando pela conversa no direct e no e-mail, até a venda, o pós-venda e a volta pra comprar de novo. Nada de cada canal falando uma língua.</p>
+          </li>
+          <li class="parte">
+            <h3>AI First</h3>
+            <p>A inteligência artificial faz parte do jeito Akoma de trabalhar desde o primeiro dia, e não como enfeite. Ela ajuda a criar e testar mais versões de um criativo, organiza e lê os dados, automatiza tarefas repetitivas e responde rápido quando o seu cliente chama.</p>
+          </li>
+          <li class="parte">
+            <h3>E quem decide?</h3>
+            <p>Gente, em tudo que importa. Eu escuto você, defino a estratégia com você, aprovo o que vai pro ar, cuido do tom da sua marca e respondo pelo resultado. A IA faz o repetitivo mais rápido. O resto é com gente.</p>
+          </li>
+        </ul>
+        <div class="faixa">
+          <p>Não uso IA como atalho. Uso como amplificador: de criatividade, de dados e de cuidado com cada cliente da sua base.</p>
         </div>
+        <div class="ia-tabela">
+          <div class="ia-col ia-faz">
+            <h3>O que a IA faz na Akoma</h3>
+            <ul>
+              <li>Cria e testa versões de criativo</li>
+              <li>Organiza e lê dados</li>
+              <li>Automatiza o repetitivo</li>
+              <li>Responde rápido e chama uma pessoa quando precisa</li>
+            </ul>
+          </div>
+          <div class="ia-col ia-gente">
+            <h3>O que fica com gente</h3>
+            <ul>
+              <li>Decidir a sua estratégia</li>
+              <li>Entender o seu cliente</li>
+              <li>Aprovar o que vai pro ar</li>
+              <li>Responder pelo resultado</li>
+            </ul>
+          </div>
+        </div>
+        <p class="proximo"><a href="#diagnostico">Quero ver isso no meu negócio <span aria-hidden="true">→</span></a></p>
+      </div>
     </section>
 
-    <section id="match" class="assessment-section">
-        <div class="assessment-wrap" data-aos="zoom-in">
-            <div class="clock-visual">⏳</div>
-            <div id="quiz">
-                <div class="step active" id="s1">
-                    <h2>Seu negócio busca conexões mais profundas? ✨</h2>
-                    <div class="opt-wrap">
-                        <button class="opt-btn" onclick="next(2)">Sim, com certeza</button>
-                        <button class="opt-btn" onclick="next(2)">É o que nos falta</button>
-                    </div>
-                </div>
-                <div class="step" id="s2">
-                    <h2>Você valoriza a criatividade aliada ao respeito? 🕊️</h2>
-                    <div class="opt-wrap"><button class="opt-btn" onclick="next(3)">Sempre</button><button class="opt-btn" onclick="next(3)">Quero implementar</button></div>
-                </div>
-                <div class="step" id="s3">
-                    <h2>Pronto para traduzir seu sonho em resultados? 📈</h2>
-                    <div class="opt-wrap"><button class="opt-btn" onclick="next(4)">Estou pronto</button><button class="opt-btn" onclick="next(4)">Vamos começar!</button></div>
-                </div>
-                <div class="step" id="s4">
-                    <h2>O Match é Real! 🥂</h2>
-                    <p style="margin: 20px 0;">Você tem o DNA da Akoma Lab. Vamos conversar sobre como elevar seu projeto?</p>
-                    <form onsubmit="event.preventDefault(); alert('Conexão iniciada!');" class="capture-form" style="max-width: 400px; margin: 30px auto;">
-                        <input type="text" placeholder="Seu Nome" required style="width:100%; padding:15px; border-radius:15px; border:none; margin-bottom:10px;">
-                        <input type="tel" placeholder="WhatsApp" required style="width:100%; padding:15px; border-radius:15px; border:none; margin-bottom:20px;">
-                        <button type="submit" class="btn-equipe" style="width:100%; border:none; cursor:pointer;">Agendar Match</button>
-                    </form>
-                </div>
-            </div>
-            <div class="quiz-dots" id="quizDots">
-                <span class="active"></span><span></span><span></span><span></span>
-            </div>
+    <section class="servicos" id="oficio" aria-labelledby="servicos-titulo">
+      <div class="wrap">
+        <p class="tag">Serviços</p>
+        <h2 id="servicos-titulo">Tudo conectado. Ninguém no automático.</h2>
+        <p class="lead">Social pra ser lembrado, tráfego pra ser encontrado, inbound pra atrair quem já procura, CRM pra não perder ninguém de vista e automação pra nada ficar sem resposta. Tudo medido, com IA em cada etapa e gente decidindo cada passo.</p>
+        <ul class="pilares-grid">
+          <li class="pilar pilar-ultramar">
+            <h3>Automação com IA</h3>
+            <p>O repetitivo roda sozinho pra você cuidar de gente.</p>
+            <ul>
+              <li>Mapeamento dos seus processos</li>
+              <li>Fluxos de atendimento e follow-up</li>
+              <li>Respostas automáticas no direct e no e-mail, com saída pra uma pessoa</li>
+              <li>Integração entre as ferramentas que você já usa</li>
+              <li>Assistentes de IA supervisionados</li>
+            </ul>
+            <a class="link-acao" href="#diagnostico">Quero isso no meu negócio</a>
+          </li>
+          <li class="pilar pilar-choque">
+            <h3>Social</h3>
+            <p>Redes sociais com estratégia, não só com estética.</p>
+            <ul>
+              <li>Planejamento editorial</li>
+              <li>Criativos gerados e testados com IA</li>
+              <li>Gestão das redes sociais</li>
+              <li>Gestão de comunidade</li>
+              <li>Relatório com leitura e próximo passo</li>
+            </ul>
+            <a class="link-acao" href="#diagnostico">Quero isso no meu negócio</a>
+          </li>
+          <li class="pilar pilar-lavanda">
+            <h3>Tráfego</h3>
+            <p>Anúncio certo, pra pessoa certa, com verba sob controle.</p>
+            <ul>
+              <li>Estrutura de campanhas de mídia paga</li>
+              <li>Testes A/B de criativos e narrativas</li>
+              <li>Otimização contínua</li>
+              <li>Acompanhamento de custo por resultado</li>
+              <li>Painel de dados e monitoramento</li>
+            </ul>
+            <a class="link-acao" href="#diagnostico">Quero isso no meu negócio</a>
+          </li>
+          <li class="pilar pilar-tinta">
+            <h3>CRM Estratégico</h3>
+            <p>Sua base de contatos vira comunidade fiel.</p>
+            <p class="pilar-nota">CRM é o lugar onde ficam todos os seus contatos e conversas.</p>
+            <ul>
+              <li>Implantação e gestão de CRM</li>
+              <li>Funil de vendas</li>
+              <li>Réguas de boas-vindas e onboarding</li>
+              <li>Segmentação e reengajamento</li>
+              <li>Pesquisa NPS e gestão de retenção</li>
+            </ul>
+            <a class="link-acao" href="#diagnostico">Quero isso no meu negócio</a>
+          </li>
+          <li class="pilar pilar-lavanda">
+            <h3>Inbound</h3>
+            <p>Conteúdo que atrai quem já está procurando você.</p>
+            <ul>
+              <li>E-books e iscas digitais</li>
+              <li>Páginas de captura</li>
+              <li>Sequências de e-mail de nutrição</li>
+              <li>Conteúdo educativo pra redes e site</li>
+            </ul>
+            <a class="link-acao" href="#diagnostico">Quero isso no meu negócio</a>
+          </li>
+          <li class="pilar pilar-ultramar" id="lab">
+            <h3>Lab Training</h3>
+            <p>O seu time aprendendo a usar IA e growth no dia a dia.</p>
+            <ul>
+              <li>Treinamento de IA aplicada</li>
+              <li>Workshops de growth e criatividade</li>
+              <li>Mentoria de estratégia digital</li>
+              <li>Estruturação de processos</li>
+              <li>Consultoria de ferramentas (tech stack)</li>
+            </ul>
+            <a class="link-acao" href="#diagnostico">Quero isso no meu negócio</a>
+          </li>
+        </ul>
+        <div class="servicos-nota">
+          <p>Não sabe por onde começar? É pra isso que existe o Diagnóstico Akoma.</p>
+          <a class="btn btn-limao" href="#diagnostico">Agendar diagnóstico grátis</a>
+          <p class="ph">[NOTA SOBRE PILARES AVULSOS OU SÓ NO PACOTE 360°]</p>
         </div>
+      </div>
     </section>
 
-    <div class="drucker-section" data-aos="fade-up">
-        <blockquote>"O objetivo do marketing é conhecer o cliente tão bem que o produto se vende sozinho."</blockquote>
-        <p style="margin-top: 30px; font-weight: 500; color: var(--terracota);">— PETER DRUCKER</p>
+
+    <section class="sobre" id="sobre" aria-labelledby="sobre-titulo">
+      <div class="wrap">
+        <p class="tag">Sobre</p>
+        <h2 id="sobre-titulo">Traduzir sonhos gera valor.</h2>
+        <div class="sobre-intro">
+          <p>Essa frase nasceu com a Akoma e continua sendo o motivo de tudo.</p>
+          <p>Todo negócio começa com um sonho. O trabalho da Akoma é transformar esse sonho num marketing que funciona como sistema: conectado, medido e com gente decidindo cada passo.</p>
+          <p>A Akoma é uma agência de marketing 360° AI First pra donos de PMEs e profissionais autônomos de todo o Brasil. Fala sem rodeio, com cor e com calor. Gosta de gente e gosta de resultado, e não vê contradição nenhuma nisso.</p>
+        </div>
+        <div class="sobre-grid">
+          <div class="sobre-foto">
+            <img src="assets/img/foto-leo-placeholder.svg" width="800" height="1000" alt="Leonardo Santos, da Akoma Lab &amp; Marketing, [DESCRIÇÃO DA FOTO]">
+            <span class="ph foto-label">[FOTO DO LEO]</span>
+          </div>
+          <div class="sobre-texto">
+            <h3>Leonardo Santos (Leo)</h3>
+            <p>Novos Negócios e Relacionamento · Akoma Lab &amp; Marketing</p>
+            <!-- [VALIDAR LEO] aprovar a citação ou reescrever com as palavras dele. -->
+            <blockquote class="citacao">"Eu criei a Akoma pra tirar o marketing de quem empreende do improviso, sem tirar o calor humano da relação com o cliente. A IA acelera o trabalho. Quem decide é gente."</blockquote>
+            <p class="ph">[VALIDAR CITAÇÃO]</p>
+            <p class="ja-passou tag tag-tinta">Empresas por onde passei</p>
+            <ul class="nomes">
+              <li>QuimeraX</li>
+              <li>will bank</li>
+              <li>Globo</li>
+              <li>K21</li>
+              <li>Sebrae</li>
+            </ul>
+            <p class="leo-ia">Na Akoma, eu trabalho junto com a IA todos os dias. Ela faz primeiras versões, organiza dados e cuida do repetitivo. Quem escuta você, decide e responde pelo resultado sou eu.</p>
+            <p class="ph">[LINHA OPCIONAL DA ORIGEM] "A Akoma nasceu no Nordeste e trabalha pro Brasil inteiro. De onde eu venho, a conversa é direta e a porta fica aberta."</p>
+            <p class="ph">[LINHA OPCIONAL SOBRE O NOME] "Akoma é um símbolo Adinkra associado ao coração. Por isso: marketing com IA, sem perder o coração no caminho."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ebooks" id="ebooks" aria-labelledby="ebooks-titulo">
+      <div class="wrap">
+        <p class="tag">Material grátis</p>
+        <h2 id="ebooks-titulo">Aprende de graça. Aplica amanhã.</h2>
+        <p class="lead">Feitos pra quem faz tudo sozinho e tem pouco tempo. Com material prático pra usar no mesmo dia.</p>
+        <ul class="ebooks-grid">
+          <li class="ebook">
+            <img src="assets/img/banda-ebook.svg" width="1080" height="780" alt="">
+            <div class="ebook-corpo">
+              <h3>CRM <span class="faixa-choque">sem complicação</span></h3>
+              <p class="ebook-sub">Como implantar o seu em 30 dias. Vem com planilha modelo pra começar sem sistema nenhum.</p>
+              <p>CRM parece bicho de sete cabeças. Tem duas, no máximo.</p>
+            </div>
+          </li>
+          <li class="ebook">
+            <img src="assets/img/banda-ebook.svg" width="1080" height="780" alt="">
+            <div class="ebook-corpo">
+              <h3>Tráfego pago <span class="faixa-choque">do zero</span></h3>
+              <p class="ebook-sub">Como montar uma operação básica no Meta Ads. Vem com calculadora de verba pra você saber quanto investir.</p>
+              <p>Impulsionar não é estratégia. É um botão.</p>
+            </div>
+          </li>
+        </ul>
+        <form class="form-card js-form" action="#" method="post" novalidate id="form-ebook" style="margin-top:48px;max-width:40rem">
+          <!-- TODO: conectar o envio do formulário e os links dos e-books. Front-end apenas. -->
+          <div class="form-campos">
+            <h2 class="form-titulo">Recebe o seu e-book grátis</h2>
+            <div class="campo" data-required>
+              <label for="eb-nome">Seu nome</label>
+              <input id="eb-nome" name="nome" type="text" autocomplete="name" required placeholder="Como você gosta de ser chamado">
+              <p class="erro">Me diz seu nome pra eu te mandar o material.</p>
+            </div>
+            <div class="campo" data-required>
+              <label for="eb-email">Seu melhor e-mail</label>
+              <input id="eb-email" name="email" type="email" autocomplete="email" required placeholder="voce@suaempresa.com.br">
+              <p class="erro">Esse e-mail parece incompleto. Confere pra mim?</p>
+            </div>
+            <div class="campo" data-required>
+              <p id="eb-label">Qual você quer?</p>
+              <div class="ebook-escolhas" role="radiogroup" aria-labelledby="eb-label">
+                <label><input type="radio" name="ebook" value="crm"> CRM sem complicação</label>
+                <label><input type="radio" name="ebook" value="trafego"> Tráfego pago do zero</label>
+                <label><input type="radio" name="ebook" value="ambos"> Quero os dois</label>
+              </div>
+              <p class="erro">Escolhe pelo menos um e-book.</p>
+            </div>
+            <div class="campo" data-required>
+              <label class="check">
+                <input type="checkbox" name="consentimento" required>
+                <span>Quero receber o e-book e conteúdos da Akoma por e-mail. Posso sair quando quiser. <a href="#privacidade">Política de privacidade</a></span>
+              </label>
+              <p class="erro">Preciso do seu ok pra te mandar o material.</p>
+            </div>
+            <button class="btn btn-limao btn-grande" type="submit">Quero o e-book grátis</button>
+          </div>
+          <div class="form-sucesso-bloco" tabindex="-1">
+            <h3>Pronto! Seu e-book está aqui.</h3>
+            <p data-ebook="crm"><a class="btn btn-limao" href="#">Baixar CRM sem complicação</a> <span class="ph">[LINK E-BOOK CRM]</span></p>
+            <p data-ebook="trafego"><a class="btn btn-limao" href="#">Baixar Tráfego pago do zero</a> <span class="ph">[LINK E-BOOK TRÁFEGO]</span></p>
+            <p class="ph">[SE O LINK TAMBÉM VAI POR E-MAIL]</p>
+            <p class="proximo"><a href="#diagnostico">Quer conversar sobre o seu caso? Agendar meu diagnóstico grátis</a></p>
+          </div>
+          <p class="form-envio" role="alert">Ops, algo travou aqui. Tenta de novo em instantes ou escreve pra contato@souakoma.com.br.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="faq" id="faq" aria-labelledby="faq-titulo">
+      <div class="wrap">
+        <p class="tag">Perguntas frequentes</p>
+        <h2 id="faq-titulo">Pergunta sem rodeio, resposta sem rodeio.</h2>
+        <div class="faq-lista">
+          <details class="faq-item">
+            <summary>O que quer dizer "AI First" na prática?</summary>
+            <p>Quer dizer que a inteligência artificial está em todas as etapas do trabalho da Akoma: criar e testar versões de criativo, organizar dados, automatizar tarefas repetitivas e responder rápido. A estratégia, a aprovação do que vai pro ar e a responsabilidade pelo resultado são de gente.</p>
+          </details>
+          <details class="faq-item">
+            <summary>A IA vai fazer meu marketing sozinha?</summary>
+            <p>Não. A IA faz o repetitivo mais rápido. Eu escuto você, defino o plano com você, reviso cada peça e respondo pelo que entrego. A automação responde na hora e chama uma pessoa quando o assunto pede.</p>
+          </details>
+          <details class="faq-item">
+            <summary>A Akoma atende a minha cidade?</summary>
+            <p>O atendimento é 100% remoto, pra donos de PMEs e profissionais autônomos do Brasil todo, com opção de atendimento presencial em São Paulo e no Rio de Janeiro.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Quanto custa?</summary>
+            <p>O valor depende do escopo, e o escopo é definido no Diagnóstico Akoma, que é gratuito. Depois dele, se fizer sentido pros dois lados, você recebe uma proposta com escopo, prazos e investimento por escrito.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Preciso contratar os seis serviços?</summary>
+            <p>Não necessariamente. O 360° funciona melhor com tudo conectado, mas o diagnóstico mostra por onde começar no seu momento. <span class="ph">[PILARES AVULSOS OU SÓ NO 360°]</span></p>
+          </details>
+          <details class="faq-item">
+            <summary>Em quanto tempo vejo resultado?</summary>
+            <p>Não prometo prazo de venda, porque resultado de venda também depende da sua oferta, do seu mercado e do seu atendimento. O que dá pra combinar são entregas com data (por exemplo, quando o CRM fica pronto) e uma leitura mensal do que funcionou, do que não funcionou e do próximo passo.</p>
+          </details>
+          <details class="faq-item">
+            <summary>O diagnóstico é mesmo gratuito? Tenho que contratar depois?</summary>
+            <p>É gratuito e sem compromisso. São 30 minutos online, comigo, pra entender o seu momento. Você sai com um próximo passo claro, contratando a Akoma ou não.</p>
+          </details>
+          <details class="faq-item">
+            <summary>A Akoma ensina o meu time a usar IA?</summary>
+            <p>Sim. É o Lab Training: treinamento de IA aplicada, workshops de growth e criatividade e mentoria, pra sua equipe usar IA com critério no dia a dia.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="diagnostico" id="diagnostico" aria-labelledby="diagnostico-titulo">
+      <div class="wrap">
+        <p class="tag">Diagnóstico Akoma</p>
+        <h2 id="diagnostico-titulo">Bora descobrir por onde começar?</h2>
+        <p class="lead">30 minutos. Gratuito. Online. Comigo.</p>
+        <p class="diagnostico-texto">Eu olho junto com você o seu momento: redes sociais, anúncios, atendimento e como seus contatos estão organizados. Você sai com um próximo passo claro, contratando a Akoma ou não.</p>
+        <h3 class="passos-titulo">Como funciona</h3>
+        <ol class="passos-diag">
+          <li><strong>Você preenche</strong> o formulário abaixo. Leva 1 minuto.</li>
+          <li><strong>Eu te respondo</strong> por e-mail pra combinar o horário.</li>
+          <li><strong>Você e eu conversamos</strong> por videochamada, por 30 minutos. Eu conduzo cada diagnóstico pessoalmente.</li>
+          <li><strong>Você sai com o próximo passo.</strong> E decide com calma.</li>
+        </ol>
+        <ul class="checks">
+          <li>Pra donos de PMEs e profissionais autônomos de qualquer lugar do Brasil</li>
+          <li>Conversa por videochamada, conduzida pelo Leo</li>
+          <li>Só 3 vagas por semana</li>
+          <li>Se fechar com a Akoma: atendimento 100% remoto, com opção de atendimento presencial em São Paulo e no Rio de Janeiro</li>
+        </ul>
+        <p class="ph">[RECOMENDAÇÕES POR ESCRITO DEPOIS DA CONVERSA]</p>
+        <p class="selo-linha"><span class="selo">Agendamento online em breve</span> <span>Por enquanto, é pelo formulário ou pela DM do <a href="https://instagram.com/sou.akoma">@sou.akoma</a>.</span></p>
+        <div class="diagnostico-grid">
+          <form class="form-card js-form" action="#" method="post" novalidate id="form-diagnostico">
+            <!-- TODO: conectar o envio do formulário (CRM, e-mail ou serviço). Front-end apenas. -->
+            <div class="form-campos">
+              <h2 class="form-titulo">Quero meu Diagnóstico Akoma</h2>
+              <p class="form-apoio">Leva 1 minuto. Eu te respondo por e-mail.</p>
+              <div class="campo" data-required>
+                <label for="diag-nome">Seu nome</label>
+                <input id="diag-nome" name="nome" type="text" autocomplete="name" required placeholder="Como você gosta de ser chamado">
+                <p class="erro">Me diz seu nome pra eu saber com quem vou conversar.</p>
+              </div>
+              <div class="campo" data-required>
+                <label for="diag-email">Seu melhor e-mail</label>
+                <input id="diag-email" name="email" type="email" autocomplete="email" required placeholder="voce@suaempresa.com.br">
+                <p class="erro">Esse e-mail parece incompleto. Confere pra mim?</p>
+              </div>
+              <div class="campo" data-required>
+                <label for="diag-empresa">Sua empresa ou atividade</label>
+                <input id="diag-empresa" name="empresa" type="text" autocomplete="organization" required placeholder="Ex.: clínica de estética, consultoria, loja de roupas">
+                <p class="erro">Conta o nome ou o tipo do seu negócio.</p>
+              </div>
+              <div class="campo" data-required>
+                <label for="diag-desafio">Seu maior desafio hoje</label>
+                <select id="diag-desafio" name="desafio" required>
+                  <option value="" selected disabled>Escolha uma opção</option>
+                  <option>Atrair mais clientes</option>
+                  <option>Responder e acompanhar quem chama</option>
+                  <option>Cuidar melhor de quem já comprou</option>
+                  <option>Organizar redes sociais e anúncios</option>
+                  <option>Colocar meu time pra usar IA</option>
+                  <option>Ainda não sei, quero ajuda pra descobrir</option>
+                </select>
+                <p class="erro">Escolhe a opção mais próxima. Dá pra detalhar embaixo.</p>
+              </div>
+              <div class="campo">
+                <label for="diag-detalhe">Quer contar um pouco mais? (opcional)</label>
+                <textarea id="diag-detalhe" name="detalhe" rows="3" placeholder="Ex.: posto toda semana mas quase ninguém chama no direct"></textarea>
+              </div>
+              <div class="campo" data-required>
+                <label class="check">
+                  <input type="checkbox" name="consentimento" required>
+                  <span>Concordo em receber o contato da Akoma sobre o diagnóstico e li a <a href="#privacidade">política de privacidade</a>.</span>
+                </label>
+                <p class="erro">Preciso do seu ok pra entrar em contato.</p>
+              </div>
+              <div class="campo">
+                <label class="check">
+                  <input type="checkbox" name="optin">
+                  <span>Quero receber conteúdos e materiais grátis da Akoma por e-mail.</span>
+                </label>
+              </div>
+              <button class="btn btn-limao btn-grande" type="submit">Quero meu diagnóstico</button>
+              <p class="form-micro">Seus dados são usados só pra responder seu pedido. <span class="ph">[VALIDAR FERRAMENTAS]</span></p>
+            </div>
+            <div class="form-sucesso-bloco" tabindex="-1">
+              <h3>Recebido! Que bom ter você por aqui. 🤝</h3>
+              <p>Vou ler suas respostas com atenção e te escrever no e-mail que você informou pra combinar o horário. Como são só 3 vagas por semana, se a semana estiver cheia eu te ofereço a próxima data livre.</p>
+              <p class="ph">[ENVIO AINDA NÃO CONECTADO]</p>
+              <p>Enquanto isso: <a class="btn btn-limao" href="https://instagram.com/sou.akoma">Seguir @sou.akoma</a></p>
+            </div>
+            <p class="form-envio" role="alert">Ops, algo travou aqui. Tenta de novo em instantes ou escreve pra contato@souakoma.com.br.</p>
+          </form>
+          <div>
+            <p class="alt-email">Prefere conversar por lá? Me chama na DM do <a href="https://instagram.com/sou.akoma">@sou.akoma</a>. Ou escreve pra <a href="mailto:contato@souakoma.com.br">contato@souakoma.com.br</a>.</p>
+            <p class="frase-fecha">A IA acelera. Você decide.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid footer-grid-3">
+      <div class="footer-brand">
+        <a class="logo" href="#inicio">
+          <img src="assets/img/wordmark-tinta.svg" width="220" height="21" alt="Akoma Lab &amp; Marketing">
+        </a>
+        <p class="footer-slogan">A IA acelera. Você decide.</p>
+        <p>Agência de marketing 360° AI First pra PMEs e autônomos.</p>
+      </div>
+      <div>
+        <h2>Navegue</h2>
+        <ul>
+          <li><a href="#ai-first">AI First</a></li>
+          <li><a href="#oficio">Serviços</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#ebooks">E-books</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#diagnostico">Diagnóstico grátis</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Fale com a Akoma</h2>
+        <p class="footer-atende">Atendimento 100% remoto, com opção presencial em São Paulo e no Rio de Janeiro</p>
+        <ul>
+          <li><a href="mailto:contato@souakoma.com.br">contato@souakoma.com.br</a></li>
+          <li><a href="https://instagram.com/sou.akoma">Instagram @sou.akoma</a></li>
+          <li><span class="ph">[LINK LINKEDIN]</span></li>
+        </ul>
+      </div>
     </div>
+    <div class="wrap footer-base">
+      <p>© 2026 <span class="ph">[RAZÃO SOCIAL]</span> · CNPJ <span class="ph">[CNPJ]</span> · <a href="#privacidade">Privacidade e cookies</a></p>
+      <p class="footer-assinatura">Marketing inteiro. Gente no centro.</p>
+      <a class="voltar-topo" href="#topo">Voltar ao topo</a>
+    </div>
+  </footer>
 
-    <section id="lab" class="section-padding">
-        <h2 style="margin-bottom: 50px; text-align: center;">Curiosidades do Lab 💡</h2>
-        <div class="carousel-wrapper">
-            <button class="nav-arrow prev-arrow" onclick="scrollCarousel(-1)">❮</button>
-            <div class="carousel-container" id="carousel">
-                <div class="carousel-card"><p>Empresas com CRM estratégico aumentam a fidelização em 33%.</p><span class="source">Harvard B. Review</span></div>
-                <div class="carousel-card"><p>Reter um cliente atual é até 7x mais barato do que conquistar um novo.</p><span class="source">Bain e Company</span></div>
-                <div class="carousel-card"><p>Anúncios com narrativa emocional geram 2x mais vendas que técnicos.</p><span class="source">Nielsen</span></div>
-                <div class="carousel-card"><p>E-mails segmentados têm taxas de clique 100% maiores que genéricos.</p><span class="source">Mailchimp</span></div>
-                <div class="carousel-card"><p>Marcas com propósito crescem 2x mais rápido que as concorrentes.</p><span class="source">Kantar</span></div>
-                <div class="carousel-card"><p>A primeira impressão online de uma marca é formada em 0.05 segundos.</p><span class="source">Google Data</span></div>
-                <div class="carousel-card"><p>80% dos lucros futuros virão de apenas 20% dos seus clientes atuais.</p><span class="source">Gartner</span></div>
-                <div class="carousel-card"><p>Landing pages com vídeos podem aumentar a conversão em 80%.</p><span class="source">Unbounce</span></div>
-                <div class="carousel-card"><p>UX bem feito pode aumentar taxas de conversão em 400%.</p><span class="source">Forrester</span></div>
-                <div class="carousel-card"><p>Marcas que humanizam o digital têm LTV 40% maior.</p><span class="source">Akoma Lab</span></div>
-                <div class="carousel-card"><p>Empresas que usam IA em marketing reduzem em até 30% o tempo de produção de campanhas.</p><span class="source">McKinsey</span></div>
-                <div class="carousel-card"><p>PMEs que adotam IA generativa relatam ganho médio de produtividade de 40% no time de marketing.</p><span class="source">Salesforce</span></div>
-                <div class="carousel-card"><p>Campanhas otimizadas por IA têm CAC até 25% menor que campanhas geridas manualmente.</p><span class="source">Boston Consulting Group</span></div>
-            </div>
-            <button class="nav-arrow next-arrow" onclick="scrollCarousel(1)">❯</button>
-        </div>
-    </section>
+  <div class="modal" id="privacidade" hidden>
+    <div class="modal-backdrop" data-close-modal tabindex="-1"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="privacidade-titulo">
+      <h2 id="privacidade-titulo" tabindex="-1">Privacidade e cookies</h2>
+      <p>A Akoma Lab &amp; Marketing (<span class="ph">[RAZÃO SOCIAL]</span>, CNPJ <span class="ph">[CNPJ]</span>) usa os dados que você informa nos formulários deste site (nome, e-mail, empresa e desafio) só pra responder seu pedido de diagnóstico, enviar o e-book que você pediu e, se você autorizar, mandar conteúdos por e-mail. Você pode pedir acesso, correção ou exclusão dos seus dados a qualquer momento pelo <a href="mailto:contato@souakoma.com.br">contato@souakoma.com.br</a>. Este site usa cookies pra funcionar e, se você aceitar, pra entender como ele é usado.</p>
+      <p class="ph-bloco ph">[TEXTO COMPLETO A REVISAR COM PROFISSIONAL RESPONSÁVEL, CONFORME A LEI Nº 13.709/2018 (LGPD): BASE LEGAL, PRAZO DE RETENÇÃO, FERRAMENTAS (CRM, E-MAIL, ANALYTICS, PIXEL DA META) E COOKIES USADOS.]</p>
+      <button class="btn btn-tinta" type="button" data-close-modal>Fechar</button>
+    </div>
+  </div>
 
-    <footer>
-        <div class="social-links">
-            <a href="#">INSTAGRAM</a>
-            <a href="#">LINKEDIN</a>
-        </div>
-        <a href="mailto:contato@souakoma.com.br" class="contact-email">contato@souakoma.com.br</a>
-        <p style="opacity: 0.3; font-size: 0.7rem; margin-top: 20px;">© 2026 Akoma Lab e Marketing - Onde a estratégia encontra a alma</p>
-    </footer>
+  <div class="cookie-bar" id="cookie-bar" role="dialog" aria-label="Aviso de cookies">
+    <p>A Akoma usa cookies pra entender como o site é usado e melhorar sua visita. <span class="ph">[VALIDAR FERRAMENTAS DE COOKIES]</span></p>
+    <div class="cookie-acoes">
+      <button class="btn btn-limao" type="button" data-cookie="all">Aceitar</button>
+      <button class="btn btn-contorno" type="button" data-cookie="needed">Só os necessários</button>
+      <a class="btn btn-texto" href="#privacidade">Saiba mais</a>
+    </div>
+  </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({ duration: 1200, once: true });
-
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        /* ---------- Lâmpada + Barra de Progresso de Scroll ---------- */
-        const bulb = document.getElementById('bulb');
-        const scrollProgress = document.getElementById('scrollProgress');
-
-        window.addEventListener('scroll', () => {
-            const scrollPos = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const pct = docHeight > 0 ? (scrollPos / docHeight) * 100 : 0;
-
-            if (scrollProgress) scrollProgress.style.width = pct + '%';
-
-            if (bulb) {
-                const glowStrength = 15 + Math.min(pct / 5, 15);
-                bulb.style.transform = `translateY(${scrollPos * 0.1}px) rotate(${scrollPos * 0.05}deg)`;
-                bulb.style.filter = `drop-shadow(0 0 ${glowStrength}px var(--terracota))`;
-            }
-        }, { passive: true });
-
-        /* ---------- Glow Ambiente seguindo o cursor ---------- */
-        const cursorGlow = document.getElementById('cursorGlow');
-        if (cursorGlow && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
-            let gx = window.innerWidth / 2, gy = window.innerHeight / 2;
-            let tx = gx, ty = gy;
-            window.addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; }, { passive: true });
-            (function animateGlow() {
-                gx += (tx - gx) * 0.08;
-                gy += (ty - gy) * 0.08;
-                cursorGlow.style.transform = `translate(${gx - 250}px, ${gy - 250}px)`;
-                requestAnimationFrame(animateGlow);
-            })();
-        } else if (cursorGlow) {
-            cursorGlow.style.display = 'none';
-        }
-
-        /* ---------- Rede de nós sutil no Hero (Canvas) ---------- */
-        const heroCanvas = document.getElementById('hero-network');
-        if (heroCanvas && !reduceMotion) {
-            const ctx = heroCanvas.getContext('2d');
-            const heroSection = document.getElementById('inicio');
-            let nodes = [];
-            const NODE_COUNT = window.innerWidth < 768 ? 18 : 38;
-
-            function resizeCanvas() {
-                heroCanvas.width = heroSection.offsetWidth;
-                heroCanvas.height = heroSection.offsetHeight;
-            }
-
-            function initNodes() {
-                nodes = Array.from({ length: NODE_COUNT }, () => ({
-                    x: Math.random() * heroCanvas.width,
-                    y: Math.random() * heroCanvas.height,
-                    vx: (Math.random() - 0.5) * 0.25,
-                    vy: (Math.random() - 0.5) * 0.25
-                }));
-            }
-
-            function drawNetwork() {
-                ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
-                nodes.forEach(n => {
-                    n.x += n.vx; n.y += n.vy;
-                    if (n.x < 0 || n.x > heroCanvas.width) n.vx *= -1;
-                    if (n.y < 0 || n.y > heroCanvas.height) n.vy *= -1;
-                });
-
-                for (let i = 0; i < nodes.length; i++) {
-                    for (let j = i + 1; j < nodes.length; j++) {
-                        const dx = nodes[i].x - nodes[j].x;
-                        const dy = nodes[i].y - nodes[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 160) {
-                            ctx.strokeStyle = `rgba(195, 91, 62, ${0.12 * (1 - dist / 160)})`;
-                            ctx.lineWidth = 1;
-                            ctx.beginPath();
-                            ctx.moveTo(nodes[i].x, nodes[i].y);
-                            ctx.lineTo(nodes[j].x, nodes[j].y);
-                            ctx.stroke();
-                        }
-                    }
-                }
-                nodes.forEach(n => {
-                    ctx.fillStyle = 'rgba(253, 248, 245, 0.35)';
-                    ctx.beginPath();
-                    ctx.arc(n.x, n.y, 1.6, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-
-                requestAnimationFrame(drawNetwork);
-            }
-
-            resizeCanvas();
-            initNodes();
-            drawNetwork();
-            window.addEventListener('resize', () => { resizeCanvas(); initNodes(); });
-        }
-
-        /* ---------- Spotlight + Tilt nos cards de serviço ---------- */
-        if (!reduceMotion && window.matchMedia('(hover: hover)').matches) {
-            document.querySelectorAll('.service-block').forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    card.style.setProperty('--mx', `${x}px`);
-                    card.style.setProperty('--my', `${y}px`);
-
-                    const rotateY = ((x / rect.width) - 0.5) * 6;
-                    const rotateX = ((y / rect.height) - 0.5) * -6;
-                    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
-                });
-            });
-        }
-
-        /* ---------- Botões com atração magnética ---------- */
-        if (!reduceMotion && window.matchMedia('(hover: hover)').matches) {
-            document.querySelectorAll('.btn-equipe, .opt-btn').forEach(btn => {
-                btn.addEventListener('mousemove', (e) => {
-                    const rect = btn.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    btn.style.transform = `translate(${x * 0.18}px, ${y * 0.3}px)`;
-                });
-                btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0, 0)'; });
-            });
-        }
-
-        /* ---------- Quiz "O Match" ---------- */
-        function next(n) {
-            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-            document.getElementById('s' + n).classList.add('active');
-
-            document.querySelectorAll('#quizDots span').forEach((dot, i) => {
-                dot.classList.toggle('active', i === n - 1);
-            });
-        }
-
-        /* ---------- Reveal palavra por palavra (Drucker) ---------- */
-        const druckerQuote = document.querySelector('.drucker-section blockquote');
-        if (druckerQuote) {
-            const text = druckerQuote.textContent.trim();
-            druckerQuote.innerHTML = text.split(' ').map(w => `<span class="word">${w}</span>`).join(' ');
-            const words = druckerQuote.querySelectorAll('.word');
-
-            const druckerObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        words.forEach((w, i) => {
-                            w.style.transitionDelay = `${i * 35}ms`;
-                            w.classList.add('visible');
-                        });
-                        druckerObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.4 });
-            druckerObserver.observe(druckerQuote);
-        }
-
-        /* ---------- Traço animado da seção AI First ---------- */
-        const threadPath = document.getElementById('ai-thread-path');
-        if (threadPath) {
-            const length = threadPath.getTotalLength();
-            threadPath.style.strokeDasharray = length;
-            threadPath.style.strokeDashoffset = length;
-
-            const threadObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        threadPath.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.22, 1, 0.36, 1)';
-                        threadPath.style.strokeDashoffset = '0';
-                        threadObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.3 });
-            threadObserver.observe(threadPath);
-        }
-
-        /* ---------- Carrossel "Curiosidades do Lab" (auto-scroll contínuo) ---------- */
-        const carousel = document.getElementById('carousel');
-        if (carousel) {
-            const originalCards = Array.from(carousel.children);
-            originalCards.forEach(card => {
-                carousel.appendChild(card.cloneNode(true));
-            });
-
-            let isPaused = false;
-            let halfWidth = carousel.scrollWidth / 2;
-            window.addEventListener('resize', () => { halfWidth = carousel.scrollWidth / 2; });
-            window.addEventListener('load', () => { halfWidth = carousel.scrollWidth / 2; });
-
-            carousel.addEventListener('mouseenter', () => { isPaused = true; });
-            carousel.addEventListener('mouseleave', () => { isPaused = false; });
-
-            if (!reduceMotion) {
-                (function autoScroll() {
-                    if (!isPaused) {
-                        carousel.scrollLeft += 0.6;
-                        if (carousel.scrollLeft >= halfWidth) {
-                            carousel.scrollLeft -= halfWidth;
-                        }
-                    }
-                    requestAnimationFrame(autoScroll);
-                })();
-            }
-        }
-
-        function scrollCarousel(direction) {
-            const container = document.getElementById('carousel');
-            container.scrollBy({ left: direction * 340, behavior: 'smooth' });
-        }
-    </script>
+  <a class="btn btn-limao flutua-diag" href="#diagnostico">Diagnóstico grátis</a>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animacoes.js"></script>
 </body>
 </html>
