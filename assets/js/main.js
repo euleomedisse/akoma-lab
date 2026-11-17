@@ -166,12 +166,16 @@
           sucesso.focus();
         }
         if (form.id === "form-ebook") {
-          var escolhido = (form.querySelector("input[name='ebook']:checked") || {}).value || "";
-          form.querySelectorAll("[data-ebook]").forEach(function (el) {
-            var tipo = el.getAttribute("data-ebook");
-            var show = escolhido === "ambos" || tipo === escolhido;
-            el.hidden = !show;
-          });
+          var escolhidoInput = form.querySelector("input[name='ebook']:checked");
+          var escolhido = escolhidoInput ? escolhidoInput.value : "";
+          var downloads = form.querySelectorAll("[data-ebook]");
+          if (downloads.length) {
+            downloads.forEach(function (el) {
+              var tipo = el.getAttribute("data-ebook");
+              var show = escolhido === "ambos" || tipo === escolhido;
+              el.hidden = !show;
+            });
+          }
         }
       }, 400);
     });

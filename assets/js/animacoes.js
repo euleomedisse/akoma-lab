@@ -39,7 +39,7 @@
     ".pilar", ".servicos-nota",
     ".sobre .tag", ".sobre h2", ".sobre-intro", ".sobre-foto", ".sobre-texto",
     ".ebooks .tag", ".ebooks h2", ".ebooks .lead",
-    ".ebook", "#form-ebook",
+    ".ebook",
     ".faq .tag", ".faq h2",
     ".faq-item",
     ".diagnostico .tag", ".diagnostico h2", ".diagnostico .lead", ".diagnostico-texto",

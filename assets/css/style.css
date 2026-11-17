@@ -620,7 +620,7 @@ p.ph, li.ph, blockquote.ph, .ph-bloco {
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
-.ebook .btn { align-self: flex-start; margin-top: 8px; }
+.ebook .btn { align-self: flex-start; margin-top: auto; }
 .ebooks-micro { margin-top: var(--espaco-3); font-weight: 700; }
 
 /* FAQ */
@@ -1039,6 +1039,7 @@ body.has-cookie .flutua-diag { bottom: auto; } /* placed via JS if needed */
   .shape-ultramar { width: 280px; height: 140px; }
 
   .pilares-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .ebooks-grid { grid-template-columns: repeat(3, 1fr); }
 
   .sobre-grid {
     grid-template-columns: minmax(260px, 0.85fr) 1.2fr;
