@@ -967,6 +967,10 @@ body.has-cookie .flutua-diag { bottom: auto; } /* placed via JS if needed */
 /* Menu mobile */
 
 @media (max-width: 1099px) {
+  .site-header.menu-open {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
   .menu-open .nav {
     position: fixed;
     top: calc(8px + 80px);
